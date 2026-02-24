@@ -15,7 +15,7 @@ A personal interactive blog styled as a beautiful hardcover book — forest gree
 
 **For the Writer (me)**
 - Secret writer's studio hidden from the public
-- Type `charmi` on the keyboard (while not in a text box) to unlock it
+- Type a secret word on the keyboard (while not in a text box) to unlock it
 - Write and publish new chapters directly to the diary
 - Edit or delete existing chapters
 - View and delete reader comments
@@ -30,7 +30,7 @@ Just open the website. The book opens automatically. Click any chapter from the 
 ### Writing & Publishing (Author Only)
 1. Open the website
 2. Make sure you're not clicked into any text box
-3. Type `charmi` on your keyboard
+3. Type secret word on your keyboard
 4. The Writer's Studio slides open
 5. Go to the **Write** tab, add your title and entry, and hit **Publish to Diary**
 
@@ -46,15 +46,6 @@ Just open the website. The book opens automatically. Click any chapter from the 
 
 ## 🌐 Live Site
 
-
----
-
-## 📁 Files
-
-| File | Purpose |
-|------|---------|
-| `index.html` | The entire website — upload this to GitHub |
-| `README.md` | This file |
 
 ---
 
