@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charmi's Diary</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --green: #2d5a27;
+  --green-dark: #1a3a16;
+  --green-light: #3d7a35;
+  --gold: #c9972a;
+  --gold-light: #e8b84b;
+  --gold-bright: #f5d67a;
+  --paper: #f2e8ce;
+  --ink: #1e0f00;
+  --neon: #39ff14;
+  --neon2: #00ff88;
+}
+
+body {
+  background: #050f05;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IM Fell English', serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── NEON BG ── */
+.bg-glow {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 50%, rgba(57,255,20,0.20) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 75% at 85% 30%, rgba(0,255,136,0.13) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 45% at 55% 85%, rgba(57,255,20,0.09) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 10%, rgba(0,200,80,0.07) 0%, transparent 50%),
+    linear-gradient(135deg, #040e04 0%, #071307 40%, #030903 70%, #060d06 100%);
+  pointer-events: none; z-index: 0;
+}
+.bg-grid {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(57,255,20,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57,255,20,0.035) 1px, transparent 1px);
+  background-size: 55px 55px;
+  pointer-events: none; z-index: 0;
+}
+/* Neon edge glow */
+.bg-glow::after {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 30% 100% at 0% 50%, rgba(57,255,20,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 100% at 100% 50%, rgba(57,255,20,0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Particles */
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+.particle {
+  position: absolute; border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(110vh); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 0.5; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* ── SCENE ── */
+.scene {
+  perspective: 2800px;
+  position: relative; z-index: 2;
+}
+
+/* ── BOOK (landscape, two-page) ── */
+.book {
+  width: 800px;
+  height: 530px;
+  position: relative;
+  transform-style: preserve-3d;
+  filter:
+    drop-shadow(0 40px 80px rgba(0,0,0,0.9))
+    drop-shadow(0 0 60px rgba(57,255,20,0.18))
+    drop-shadow(0 0 120px rgba(57,255,20,0.07));
+}
+
+/* ── COVER ── */
+.cover-wrap {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 1.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  z-index: 10;
+}
+.cover-wrap.open { transform: rotateY(-165deg); }
+
+.cover-front {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  border-radius: 3px 14px 14px 3px;
+}
+.cover-back-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  background: var(--paper);
+  border-radius: 14px 3px 3px 14px;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.12);
+}
+
+.cover-skin {
+  width: 100%; height: 100%;
+  background: linear-gradient(155deg, #306528 0%, #3d7a30 20%, #2d5a27 48%, #244e1e 72%, #1a3a16 100%);
+  border-radius: 3px 14px 14px 3px;
+  position: relative; overflow: hidden;
+  box-shadow: inset -6px 0 18px rgba(0,0,0,0.4);
+}
+.cover-skin::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(47deg, rgba(0,0,0,0.035) 0, rgba(0,0,0,0.035) 1px, transparent 1px, transparent 7px),
+    repeating-linear-gradient(-47deg, rgba(255,255,255,0.018) 0, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 7px);
+}
+
+.spine {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 24px;
+  background: linear-gradient(90deg, #080f07 0%, #112010 50%, #2d5a27 100%);
+  border-right: 1px solid rgba(201,151,42,0.3);
+}
+
+.cover-border {
+  position: absolute; inset: 15px;
+  border: 2px solid var(--gold);
+  box-shadow: inset 0 0 0 5px rgba(201,151,42,0.09), 0 0 0 1px rgba(201,151,42,0.25);
+  pointer-events: none;
+}
+.cover-border::before {
+  content: '';
+  position: absolute; inset: 7px;
+  border: 1px solid rgba(201,151,42,0.32);
+}
+
+/* Corner ornaments */
+.csq { position: absolute; width: 62px; height: 62px; }
+.csq.tl { top: 15px; left: 15px; }
+.csq.tr { top: 15px; right: 15px; transform: scaleX(-1); }
+.csq.bl { bottom: 15px; left: 15px; transform: scaleY(-1); }
+.csq.br { bottom: 15px; right: 15px; transform: scale(-1,-1); }
+
+/* Botanical SVG */
+.cover-bota { position: absolute; inset: 0; pointer-events: none; }
+
+/* Title */
+.cover-title-wrap {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -52%);
+  text-align: center; width: 52%; z-index: 5;
+}
+.c-main-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 3rem; font-weight: 900;
+  color: var(--gold-light);
+  line-height: 1.12; letter-spacing: 2px;
+  text-shadow:
+    0 0 28px rgba(232,184,75,0.95),
+    0 0 55px rgba(201,151,42,0.45),
+    0 3px 8px rgba(0,0,0,0.95);
+  animation: glow 4s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 22px rgba(232,184,75,0.7), 0 3px 8px rgba(0,0,0,0.95); }
+  to   { text-shadow: 0 0 45px rgba(245,214,122,1), 0 0 90px rgba(201,151,42,0.5), 0 3px 8px rgba(0,0,0,0.95); }
+}
+.c-divider {
+  width: 78%; margin: 11px auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.c-byline {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem; color: var(--gold);
+  letter-spacing: 4px; opacity: 0.88;
+}
+
+/* ── PAGES BEHIND COVER ── */
+.pages-bg {
+  position: absolute; inset: 0;
+  background: var(--paper);
+  border-radius: 3px 14px 14px 3px;
+  box-shadow: inset 0 0 40px rgba(139,90,43,0.1);
+}
+
+/* ── TWO-PAGE SPREAD ── */
+.spread {
+  position: absolute; inset: 0;
+  display: none;
+  border-radius: 3px 14px 14px 3px;
+  overflow: hidden;
+  background: var(--paper);
+}
+.spread.active { display: flex; }
+
+.pg {
+  flex: 1;
+  position: relative;
+  padding: 38px 32px 42px 38px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.pg::-webkit-scrollbar { display: none; }
+.pg.right { padding: 38px 38px 42px 32px; border-left: 1px solid rgba(0,0,0,0.09); }
+
+/* Paper lines */
+.pg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 28px,
+    rgba(0,0,0,0.055) 28px, rgba(0,0,0,0.055) 29px
+  );
+  pointer-events: none;
+}
+
+/* TOC */
+.toc-head {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 1.05rem; color: var(--green-dark);
+  text-align: center; margin-bottom: 7px;
+}
+.toc-rule {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-bottom: 22px; opacity: 0.7;
+}
+.toc-row {
+  display: flex; align-items: baseline; gap: 0;
+  margin-bottom: 15px; cursor: pointer;
+  padding: 5px 7px; border-radius: 3px;
+  transition: background 0.25s;
+  opacity: 0; transform: translateX(8px);
+}
+.toc-row.show { animation: rowIn 0.45s ease forwards; }
+@keyframes rowIn { to { opacity: 1; transform: translateX(0); } }
+.toc-row:hover { background: rgba(45,90,39,0.09); }
+.toc-row:hover .toc-rname { color: var(--green); }
+.toc-rnum { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--gold); min-width: 24px; flex-shrink: 0; }
+.toc-rname { font-family: 'Lora', serif; font-size: 0.9rem; font-style: italic; color: var(--ink); flex: 1; transition: color 0.25s; }
+.toc-rdots { flex: 1; border-bottom: 1px dotted rgba(0,0,0,0.2); margin: 0 7px; margin-bottom: 3px; min-width: 20px; }
+.toc-rpg { font-family: 'Cinzel', serif; font-size: 0.65rem; color: rgba(0,0,0,0.36); }
+
+/* Right page decoration (TOC) */
+.toc-deco {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  opacity: 0.35;
+}
+
+/* Page numbers */
+.pg-num {
+  position: absolute; bottom: 15px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem; color: rgba(0,0,0,0.32);
+}
+.pg .pg-num { left: 38px; }
+.pg.right .pg-num { right: 38px; left: auto; }
+
+/* ── READING SPREAD ── */
+.read-spread {
+  position: absolute; inset: 0;
+  display: none; border-radius: 3px 14px 14px 3px;
+  overflow: hidden; background: var(--paper);
+}
+.read-spread.active { display: flex; }
+
+.rpg {
+  flex: 1; position: relative;
+  padding: 36px 30px 50px 36px;
+  overflow-y: auto; scrollbar-width: none;
+}
+.rpg::-webkit-scrollbar { display: none; }
+.rpg.right { padding: 36px 36px 50px 30px; border-left: 1px solid rgba(0,0,0,0.09); }
+.rpg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 28px,
+    rgba(0,0,0,0.055) 28px, rgba(0,0,0,0.055) 29px
+  );
+  pointer-events: none;
+}
+
+.r-chapter-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 0.9rem; color: var(--green-dark);
+  margin-bottom: 5px;
+}
+.r-rule {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-bottom: 16px; opacity: 0.6;
+}
+.r-text {
+  font-family: 'Lora', serif;
+  font-size: 0.91rem; line-height: 1.95;
+  color: var(--ink); text-align: justify;
+}
+.r-text p { margin-bottom: 0; opacity: 0; transform: translateY(7px); animation: pIn 0.45s ease forwards; }
+@keyframes pIn { to { opacity: 1; transform: translateY(0); } }
+
+.drop-cap::first-letter {
+  font-family: 'UnifrakturMaguntia', cursive;
+  font-size: 4.8rem; float: left;
+  line-height: 0.62; margin: 10px 9px 0 0;
+  color: var(--green-dark);
+  text-shadow: 1px 1px 0 var(--gold);
+}
+
+.r-back-btn {
+  position: absolute; bottom: 14px; left: 36px;
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  color: var(--gold); cursor: pointer;
+  letter-spacing: 2px; text-transform: uppercase;
+  background: none; border: none; transition: color 0.25s;
+}
+.r-back-btn:hover { color: var(--green-dark); }
+.r-pg-num {
+  position: absolute; bottom: 14px;
+  font-family: 'Cinzel', serif; font-size: 0.63rem; color: rgba(0,0,0,0.32);
+}
+.rpg .r-pg-num { left: 36px; padding-left: 60px; }
+.rpg.right .r-pg-num { right: 36px; }
+
+/* ── COMMENT OVERLAY ── */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(4,12,4,0.9); z-index: 100;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(7px);
+}
+.overlay.active { display: flex; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.c-card {
+  background: var(--paper); border: 2px solid var(--gold);
+  border-radius: 10px; padding: 38px; width: 450px; max-width: 92vw;
+  box-shadow: 0 0 90px rgba(57,255,20,0.13), 0 0 35px rgba(201,151,42,0.22), 0 28px 70px rgba(0,0,0,0.75);
+  animation: cardUp 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes cardUp { from { transform: translateY(22px) scale(0.96); opacity: 0; } to { transform: none; opacity: 1; } }
+.c-title { font-family: 'Cinzel Decorative', cursive; font-size: 1rem; color: var(--green-dark); text-align: center; margin-bottom: 4px; }
+.c-sub { font-family: 'Lora', serif; font-style: italic; font-size: 0.84rem; color: rgba(0,0,0,0.44); text-align: center; margin-bottom: 17px; }
+.c-hr { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin-bottom: 17px; }
+.c-name-in, .c-text-in {
+  width: 100%; background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(201,151,42,0.4); border-radius: 4px;
+  font-family: 'Lora', serif; font-size: 0.88rem; color: var(--ink);
+  outline: none; transition: border-color 0.3s;
+}
+.c-name-in { padding: 10px 13px; margin-bottom: 10px; }
+.c-text-in { padding: 11px 13px; height: 88px; resize: none; display: block; }
+.c-name-in:focus, .c-text-in:focus { border-color: var(--gold); }
+.c-btn {
+  width: 100%; margin-top: 13px; padding: 12px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  border: 1px solid var(--gold); border-radius: 4px;
+  color: var(--gold-light); font-family: 'Cinzel', serif;
+  font-size: 0.75rem; letter-spacing: 3px; cursor: pointer;
+  transition: all 0.3s;
+}
+.c-btn:hover { box-shadow: 0 0 22px rgba(57,255,20,0.18); transform: translateY(-1px); }
+.c-ty { display: none; text-align: center; padding: 18px 0; }
+.c-ty.show { display: block; }
+.c-seal { font-size: 2.8rem; margin-bottom: 10px; animation: sealPop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes sealPop { from { transform: scale(0) rotate(-20deg); } to { transform: scale(1) rotate(0); } }
+
+/* ── WRITER PANEL (secret) ── */
+.writer-panel {
+  display: none; position: fixed; inset: 0;
+  background: rgba(4,12,4,0.93); z-index: 200;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(10px);
+}
+.writer-panel.active { display: flex; animation: fadeIn 0.35s ease; }
+
+.w-modal {
+  background: #0b180a; border: 2px solid rgba(201,151,42,0.45);
+  border-radius: 12px; width: 680px; max-width: 95vw; max-height: 92vh;
+  overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(201,151,42,0.3) transparent;
+  box-shadow: 0 0 70px rgba(57,255,20,0.14), 0 0 140px rgba(57,255,20,0.06), 0 35px 90px rgba(0,0,0,0.85);
+}
+
+.w-head {
+  padding: 26px 30px 18px; border-bottom: 1px solid rgba(201,151,42,0.18);
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; background: #0b180a; z-index: 5;
+}
+.w-title { font-family: 'Cinzel Decorative', cursive; font-size: 1rem; color: var(--gold-light); text-shadow: 0 0 20px rgba(201,151,42,0.4); }
+.w-close { background: none; border: none; color: rgba(201,151,42,0.55); font-size: 1.3rem; cursor: pointer; transition: color 0.2s; }
+.w-close:hover { color: var(--gold-light); }
+
+.w-secret-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(57,255,20,0.08); border: 1px solid rgba(57,255,20,0.25);
+  border-radius: 20px; padding: 2px 10px;
+  font-family: 'Cinzel', serif; font-size: 0.55rem;
+  letter-spacing: 2px; color: var(--neon); margin-left: 10px;
+}
+
+.w-body { padding: 26px 30px 30px; }
+
+/* Tabs */
+.w-tabs { display: flex; gap: 4px; margin-bottom: 22px; border-bottom: 1px solid rgba(201,151,42,0.18); }
+.w-tab {
+  font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 2px;
+  color: rgba(201,151,42,0.45); padding: 8px 15px; cursor: pointer;
+  border-radius: 6px 6px 0 0; transition: all 0.25s;
+  border: 1px solid transparent; border-bottom: none;
+  margin-bottom: -1px; background: transparent;
+}
+.w-tab.active { color: var(--gold-light); border-color: rgba(201,151,42,0.28); background: rgba(201,151,42,0.06); }
+
+.w-panel { display: none; }
+.w-panel.active { display: block; }
+
+/* Form */
+.w-lbl { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 2px; color: rgba(201,151,42,0.65); text-transform: uppercase; margin-bottom: 6px; display: block; }
+.w-in {
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,151,42,0.22);
+  border-radius: 6px; color: #e8dfc0; font-family: 'Lora', serif; font-size: 0.88rem;
+  padding: 10px 13px; outline: none; transition: border-color 0.3s; margin-bottom: 17px;
+}
+.w-in:focus { border-color: rgba(201,151,42,0.55); background: rgba(255,255,255,0.05); }
+.w-ta {
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,151,42,0.22);
+  border-radius: 6px; color: #e8dfc0; font-family: 'Lora', serif; font-size: 0.88rem;
+  line-height: 1.8; padding: 13px; outline: none; resize: vertical; min-height: 190px;
+  transition: border-color 0.3s; margin-bottom: 17px; display: block; width: 100%;
+}
+.w-ta:focus { border-color: rgba(201,151,42,0.55); }
+
+/* Toolbar */
+.w-toolbar { display: flex; gap: 6px; margin-bottom: 9px; flex-wrap: wrap; }
+.w-tool {
+  padding: 5px 11px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,151,42,0.18); border-radius: 4px;
+  color: rgba(201,151,42,0.65); font-size: 0.72rem;
+  cursor: pointer; font-family: 'Cinzel', serif; transition: all 0.2s;
+}
+.w-tool:hover { background: rgba(201,151,42,0.1); color: var(--gold-light); }
+
+.w-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: rgba(201,151,42,0.37); margin-top: -12px; margin-bottom: 16px; }
+
+.w-publish {
+  width: 100%; padding: 12px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  border: 1px solid var(--gold); border-radius: 6px;
+  color: var(--gold-light); font-family: 'Cinzel', serif;
+  font-size: 0.77rem; letter-spacing: 3px; cursor: pointer; transition: all 0.3s; margin-top: 5px;
+}
+.w-publish:hover { box-shadow: 0 0 28px rgba(57,255,20,0.18), 0 0 12px rgba(201,151,42,0.28); transform: translateY(-1px); }
+
+/* Chapter cards */
+.w-cards { display: flex; flex-direction: column; gap: 11px; }
+.w-ccard {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(201,151,42,0.18);
+  border-radius: 8px; padding: 14px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: border-color 0.25s;
+}
+.w-ccard:hover { border-color: rgba(201,151,42,0.36); }
+.w-ccard-title { font-family: 'Lora', serif; font-style: italic; font-size: 0.9rem; color: #e8dfc0; }
+.w-ccard-meta { font-family: 'Cinzel', serif; font-size: 0.58rem; color: rgba(201,151,42,0.45); letter-spacing: 1px; margin-top: 4px; }
+.w-actions { display: flex; gap: 7px; }
+.w-act { padding: 5px 10px; border-radius: 4px; font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 1px; cursor: pointer; border: none; transition: all 0.2s; }
+.w-act.ed { background: rgba(201,151,42,0.14); color: var(--gold); }
+.w-act.ed:hover { background: rgba(201,151,42,0.24); }
+.w-act.dl { background: rgba(180,40,40,0.14); color: #e88; }
+.w-act.dl:hover { background: rgba(180,40,40,0.24); }
+.w-empty { font-family: 'Lora', serif; font-style: italic; color: rgba(201,151,42,0.32); text-align: center; padding: 28px 0; font-size: 0.86rem; }
+
+/* Secret key hint (shown briefly when studio opens) */
+.secret-flash {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+  background: rgba(11,24,10,0.95); border: 1px solid rgba(57,255,20,0.35);
+  border-radius: 8px; padding: 10px 22px;
+  font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 2px;
+  color: var(--neon); z-index: 300;
+  opacity: 0; transition: opacity 0.4s;
+  box-shadow: 0 0 20px rgba(57,255,20,0.2);
+  pointer-events: none;
+}
+.secret-flash.show { opacity: 1; }
+
+/* Comment cards in writer */
+.w-comment-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(201,151,42,0.18);
+  border-radius: 8px; padding: 14px 16px;
+  transition: border-color 0.25s; margin-bottom: 11px;
+}
+.w-comment-card:hover { border-color: rgba(201,151,42,0.36); }
+.w-comment-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 7px;
+}
+.w-comment-author { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--gold); letter-spacing: 1px; }
+.w-comment-chapter { font-family: 'Cinzel', serif; font-size: 0.58rem; color: rgba(201,151,42,0.4); letter-spacing: 1px; }
+.w-comment-text { font-family: 'Lora', serif; font-style: italic; font-size: 0.84rem; color: #c8bfa0; line-height: 1.6; margin-bottom: 10px; }
+.w-comment-footer { display: flex; justify-content: flex-end; }
+
+/* Comment button on reading page */
+.r-comment-btn {
+  position: absolute;
+  bottom: 14px; right: 36px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  color: var(--green-dark);
+  background: linear-gradient(135deg, rgba(201,151,42,0.18), rgba(201,151,42,0.08));
+  border: 1px solid rgba(201,151,42,0.45);
+  border-radius: 20px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.r-comment-btn:hover {
+  background: linear-gradient(135deg, rgba(201,151,42,0.32), rgba(201,151,42,0.18));
+  border-color: var(--gold);
+  color: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(201,151,42,0.2);
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(60px);
+  background: var(--green-dark); border: 1px solid var(--gold);
+  border-radius: 8px; padding: 11px 22px;
+  font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 2px;
+  color: var(--gold-light); z-index: 400;
+  box-shadow: 0 0 20px rgba(57,255,20,0.18);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Confetti */
+@keyframes confFall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+<div class="particles" id="particles"></div>
+
+<div class="scene">
+  <div class="book" id="book">
+
+    <!-- Pages background -->
+    <div class="pages-bg"></div>
+
+    <!-- TOC SPREAD -->
+    <div class="spread" id="tocSpread">
+      <!-- Left: TOC -->
+      <div class="pg">
+        <div class="toc-head">Table of Contents</div>
+        <div class="toc-rule"></div>
+        <div id="tocList"></div>
+        <span class="pg-num">i</span>
+      </div>
+      <!-- Right: decorative -->
+      <div class="pg right">
+        <div class="toc-deco">
+          <svg width="130" height="170" viewBox="0 0 130 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M65 160 C65 160 65 85 65 18" stroke="#2d5a27" stroke-width="1.6" fill="none"/>
+            <path d="M65 130 C65 130 32 108 12 82" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
+            <path d="M65 105 C65 105 95 88 115 65" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
+            <path d="M65 80 C65 80 36 62 20 42" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
+            <path d="M65 58 C65 58 90 42 108 25" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
+            <ellipse cx="10" cy="80" rx="10" ry="6" fill="#2d5a27" transform="rotate(-28 10 80)" opacity="0.7"/>
+            <ellipse cx="116" cy="63" rx="10" ry="6" fill="#2d5a27" transform="rotate(22 116 63)" opacity="0.7"/>
+            <ellipse cx="18" cy="40" rx="9" ry="5.5" fill="#2d5a27" transform="rotate(-38 18 40)" opacity="0.7"/>
+            <ellipse cx="109" cy="23" rx="9" ry="5.5" fill="#2d5a27" transform="rotate(18 109 23)" opacity="0.7"/>
+            <circle cx="65" cy="18" r="5" fill="#c9972a" opacity="0.85"/>
+            <circle cx="65" cy="160" r="4" fill="#2d5a27" opacity="0.6"/>
+            <circle cx="65" cy="80" r="2" fill="#c9972a" opacity="0.5"/>
+          </svg>
+          <p style="font-family:'Cinzel',serif;font-size:0.62rem;color:#2d5a27;letter-spacing:3px;margin-top:18px;">Est. 2026</p>
+        </div>
+        <span class="pg-num" style="right:38px;left:auto">ii</span>
+      </div>
+    </div>
+
+    <!-- READING SPREAD -->
+    <div class="read-spread" id="readSpread">
+      <div class="rpg">
+        <div class="r-chapter-title" id="rTitle"></div>
+        <div class="r-rule"></div>
+        <div class="r-text" id="rTextLeft"></div>
+        <button class="r-back-btn" onclick="backToTOC()">← Contents</button>
+        <span class="r-pg-num" id="rPgL" style="left:36px;padding-left:60px"></span>
+      </div>
+      <div class="rpg right">
+        <div class="r-text" id="rTextRight"></div>
+        <span class="r-pg-num" id="rPgR" style="right:36px;left:auto"></span>
+        <button class="r-comment-btn" onclick="document.getElementById('commentOverlay').classList.add('active')">Comment ♥</button>
+      </div>
+    </div>
+
+    <!-- COVER -->
+    <div class="cover-wrap" id="coverWrap">
+      <div class="cover-front">
+        <div class="cover-skin">
+          <div class="spine"></div>
+          <div class="cover-border"></div>
+
+          <!-- Corners -->
+          <svg class="csq tl" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
+          <svg class="csq tr" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
+          <svg class="csq bl" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
+          <svg class="csq br" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
+
+          <!-- Botanical vines -->
+          <svg class="cover-bota" viewBox="0 0 800 530" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Left vine -->
+            <path d="M85 510 C85 510 65 395 92 278 C119 162 80 82 102 28" stroke="#7a3a10" stroke-width="2.2" fill="none" opacity="0.78"/>
+            <path d="M88 448 C88 448 50 424 28 393" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="22" cy="390" rx="18" ry="11" fill="#7a3a10" transform="rotate(-26 22 390)" opacity="0.72"/>
+            <ellipse cx="14" cy="382" rx="9" ry="5.5" fill="#7a3a10" transform="rotate(-16 14 382)" opacity="0.52"/>
+            <path d="M90 368 C90 368 132 346 152 316" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="156" cy="312" rx="17" ry="10" fill="#7a3a10" transform="rotate(20 156 312)" opacity="0.72"/>
+            <path d="M90 280 C90 280 50 258 30 228" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="25" cy="224" rx="17" ry="10" fill="#7a3a10" transform="rotate(-32 25 224)" opacity="0.72"/>
+            <path d="M92 198 C92 198 132 178 154 148" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="157" cy="144" rx="16" ry="10" fill="#7a3a10" transform="rotate(22 157 144)" opacity="0.72"/>
+            <path d="M94 120 C94 120 60 98 55 62" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="52" cy="58" rx="15" ry="9" fill="#7a3a10" transform="rotate(-12 52 58)" opacity="0.72"/>
+            <!-- Right vine -->
+            <path d="M715 500 C715 500 742 375 722 254 C702 133 748 58 730 20" stroke="#7a3a10" stroke-width="2.2" fill="none" opacity="0.78"/>
+            <path d="M718 438 C718 438 756 416 776 386" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="780" cy="383" rx="18" ry="11" fill="#7a3a10" transform="rotate(24 780 383)" opacity="0.72"/>
+            <path d="M720 352 C720 352 682 330 666 300" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="662" cy="296" rx="17" ry="10" fill="#7a3a10" transform="rotate(-20 662 296)" opacity="0.72"/>
+            <path d="M722 268 C722 268 760 248 778 218" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="781" cy="215" rx="16" ry="10" fill="#7a3a10" transform="rotate(28 781 215)" opacity="0.72"/>
+            <path d="M723 182 C723 182 684 160 668 128" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
+            <ellipse cx="664" cy="124" rx="17" ry="10" fill="#7a3a10" transform="rotate(-24 664 124)" opacity="0.72"/>
+            <!-- Bottom scrollwork -->
+            <path d="M200 505 C235 482 268 490 288 468 C308 446 325 458 355 438 C385 418 415 475 448 488" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.52"/>
+            <path d="M448 488 C480 468 508 478 530 458 C552 438 565 452 600 490" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.52"/>
+            <!-- Centre spiral -->
+            <path d="M400 510 C400 510 368 488 378 466 C388 444 408 450 412 434 C416 418 398 410 394 396" stroke="#7a3a10" stroke-width="1.3" fill="none" opacity="0.42"/>
+            <!-- Gold star accents -->
+            <circle cx="162" cy="235" r="2.8" fill="#c9972a" opacity="0.78"/>
+            <circle cx="168" cy="224" r="1.4" fill="#c9972a" opacity="0.58"/>
+            <circle cx="154" cy="228" r="1.4" fill="#c9972a" opacity="0.58"/>
+            <circle cx="642" cy="165" r="2.8" fill="#c9972a" opacity="0.78"/>
+            <circle cx="648" cy="154" r="1.4" fill="#c9972a" opacity="0.58"/>
+            <circle cx="635" cy="158" r="1.4" fill="#c9972a" opacity="0.58"/>
+            <!-- Bottom leaves -->
+            <ellipse cx="245" cy="500" rx="10" ry="6" fill="#7a3a10" transform="rotate(-40 245 500)" opacity="0.62"/>
+            <ellipse cx="565" cy="494" rx="10" ry="6" fill="#7a3a10" transform="rotate(30 565 494)" opacity="0.62"/>
+          </svg>
+
+          <!-- Title -->
+          <div class="cover-title-wrap">
+            <div class="c-main-title">Charmi's<br>Diary</div>
+            <div class="c-divider"></div>
+            <div class="c-byline">A Personal Collection</div>
+          </div>
+        </div>
+      </div>
+      <div class="cover-back-face"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Comment Overlay -->
+<div class="overlay" id="commentOverlay">
+  <div class="c-card">
+    <div id="cForm">
+      <div class="c-title">Leave a Thought</div>
+      <div class="c-sub">I would love to know what you felt ✨</div>
+      <div class="c-hr"></div>
+      <input class="c-name-in" type="text" id="cName" placeholder="Your name..."/>
+      <textarea class="c-text-in" id="cText" placeholder="Write your thoughts here..."></textarea>
+      <button class="c-btn" onclick="submitComment()">SEAL & SEND</button>
+    </div>
+    <div class="c-ty" id="cTy">
+      <div class="c-seal">🕯️</div>
+      <div class="c-title">Thank you, dear reader</div>
+      <p style="font-family:'Lora',serif;font-style:italic;color:rgba(0,0,0,0.48);margin-top:10px;font-size:0.84rem;">Your words have been received with gratitude.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Writer Panel (secret) -->
+<div class="writer-panel" id="writerPanel">
+  <div class="w-modal">
+    <div class="w-head">
+      <span class="w-title">Writer's Studio <span class="w-secret-badge">🔒 AUTHOR ONLY</span></span>
+      <button class="w-close" onclick="closeWriter()">✕</button>
+    </div>
+    <div class="w-body">
+      <div class="w-tabs">
+        <button class="w-tab active" id="tab-btn-write" onclick="switchTab('write', this)">✒ Write</button>
+        <button class="w-tab" id="tab-btn-chapters" onclick="switchTab('chapters', this)">📖 My Chapters</button>
+        <button class="w-tab" id="tab-btn-comments" onclick="switchTab('comments', this)">💬 Comments</button>
+      </div>
+
+      <!-- Write -->
+      <div class="w-panel active" id="tab-write">
+        <label class="w-lbl">Chapter Title</label>
+        <input class="w-in" type="text" id="wTitle" placeholder="e.g. The Morning I Forgot My Name"/>
+        <label class="w-lbl">Your Entry</label>
+        <div class="w-toolbar">
+          <button class="w-tool" onclick="wWrap('**','**')">Bold</button>
+          <button class="w-tool" onclick="wWrap('_','_')">Italic</button>
+          <button class="w-tool" onclick="wBreak()">¶ New Para</button>
+          <button class="w-tool" onclick="wIns('✦')">✦ Divider</button>
+        </div>
+        <textarea class="w-ta" id="wContent" placeholder="Begin writing your entry here...
+
+Separate paragraphs with a blank line.
+
+Your opening paragraph gets a decorative drop cap automatically."></textarea>
+        <p class="w-hint">Tip — separate paragraphs with a blank line. The first gets a decorative drop cap.</p>
+        <label class="w-lbl">Chapter Number (leave blank for next)</label>
+        <input class="w-in" type="number" id="wNum" placeholder="e.g. 1, 2, 3..."/>
+        <button class="w-publish" onclick="publishChapter()">PUBLISH TO DIARY</button>
+      </div>
+
+      <!-- Chapters -->
+      <div class="w-panel" id="tab-chapters">
+        <div class="w-cards" id="wCards"></div>
+      </div>
+      <!-- Comments -->
+      <div class="w-panel" id="tab-comments">
+        <div class="w-cards" id="wComments"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="secret-flash" id="secretFlash">✦ WRITER'S STUDIO UNLOCKED</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── PARTICLES ──
+const pEl = document.getElementById('particles');
+const pCols = ['rgba(57,255,20,0.75)','rgba(0,255,136,0.65)','rgba(201,151,42,0.85)','rgba(57,255,20,0.4)','rgba(0,200,80,0.5)'];
+for (let i = 0; i < 35; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const s = 1 + Math.random() * 2.8;
+  p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${pCols[Math.floor(Math.random()*pCols.length)]};animation-duration:${9+Math.random()*18}s;animation-delay:${Math.random()*14}s;box-shadow:0 0 ${s*4}px currentColor;`;
+  pEl.appendChild(p);
+}
+
+// ── DATA ──
+const ROMANS = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV'];
+let chapters = [
+  { id:1, title:"The Morning I Forgot My Name", content:`There are mornings when you wake up and the ceiling feels like a stranger. You blink once, twice, and for a fleeting second — you don't know who you are. Not in a frightening way. In the quietest, most honest way imaginable.
+
+I had one of those mornings last Tuesday. The light was coming in through the curtains the way it only does in autumn, gold and thin and hesitant. The birds were trying very hard to be poetic about it.
+
+I lay there, perfectly still, waiting for myself to return. And in that pause — that three-second gap between sleep and person — I think I understood something important.
+
+We are not always who we were yesterday. And that is not a tragedy. That is, in fact, the whole point.
+
+The name comes back. The to-do list comes back. The anxiety about that email you forgot to send comes back. But for three whole seconds, you were no one. And no one felt like freedom.`, num:0 },
+  { id:2, title:"Letters Never Sent", content:`I have a folder on my phone called "drafts" that has 47 unsent messages. To my mother, mostly. To a friend who moved away three years ago. To a version of myself from 2019 who desperately needed someone to tell her she was going to be okay.
+
+I think writing letters you never send is one of the most honest things a person can do. There is no performance in it. No editing yourself for someone else's comfort. Just the raw, unpolished truth of what you actually meant to say.
+
+The letter to my mother starts: I'm not angry anymore. I just miss who we were before we both became so careful around each other. I've rewritten it fourteen times. It gets more honest each time. I'll probably never send it.
+
+There's something sacred about words that exist only for you. They don't need to arrive anywhere. They just need to be true.`, num:1 }
+];
+let nextId = 3;
+let commentTimer = null;
+let comments = []; // { id, name, text, chapterId, chapterTitle, date }
+let nextCommentId = 1;
+let currentChapterId = null;
+
+// ── BOOK OPEN ──
+window.onload = () => { buildTOC(); setTimeout(openBook, 1700); };
+
+function openBook() {
+  const cover = document.getElementById('coverWrap');
+  cover.classList.add('open');
+  setTimeout(() => {
+    cover.style.display = 'none';
+    const toc = document.getElementById('tocSpread');
+    toc.classList.add('active');
+    toc.style.opacity = '0'; toc.style.transition = 'opacity 0.45s';
+    setTimeout(() => { toc.style.opacity = '1'; revealTOC(); }, 60);
+  }, 1850);
+}
+
+function revealTOC() {
+  setTimeout(() => {
+    document.querySelectorAll('.toc-row').forEach((el, i) => {
+      setTimeout(() => el.classList.add('show'), i * 120);
+    });
+  }, 150);
+}
+
+// ── BUILD TOC ──
+function buildTOC() {
+  const list = document.getElementById('tocList');
+  if (!chapters.length) {
+    list.innerHTML = '<p style="font-family:Lora,serif;font-style:italic;color:rgba(0,0,0,0.32);text-align:center;padding:28px 0;font-size:0.84rem;">No chapters yet.</p>';
+    return;
+  }
+  list.innerHTML = chapters.map(ch => `
+    <div class="toc-row" onclick="openChapter(${ch.id})">
+      <span class="toc-rnum">${ROMANS[ch.num] || ch.num+1}.</span>
+      <span class="toc-rname">${ch.title}</span>
+      <span class="toc-rdots"></span>
+      <span class="toc-rpg">${ch.num*8+3}</span>
+    </div>`).join('');
+}
+
+// ── OPEN CHAPTER ──
+function openChapter(id) {
+  currentChapterId = id;
+  const ch = chapters.find(c => c.id === id);
+  if (!ch) return;
+  const paras = ch.content.split(/\n\n+/).filter(p => p.trim());
+  const half = Math.ceil(paras.length / 2);
+  const leftParas = paras.slice(0, half);
+  const rightParas = paras.slice(half);
+
+  const makeHTML = (arr, startDrop) => arr.map((p, i) => {
+    const cls = (i === 0 && startDrop) ? 'drop-cap' : '';
+    return `<p class="${cls}" style="animation-delay:${i*0.11}s">${p.trim().replace(/\n/g,'<br>')}</p>`;
+  }).join('');
+
+  document.getElementById('rTitle').textContent = ch.title;
+  document.getElementById('rTextLeft').innerHTML = makeHTML(leftParas, true);
+  document.getElementById('rTextRight').innerHTML = makeHTML(rightParas, false);
+  document.getElementById('rPgL').textContent = `Page ${ch.num*8+3}`;
+  document.getElementById('rPgR').textContent = `Page ${ch.num*8+4}`;
+
+  const toc = document.getElementById('tocSpread');
+  toc.style.opacity = '0';
+  setTimeout(() => {
+    toc.classList.remove('active');
+    const rs = document.getElementById('readSpread');
+    rs.classList.add('active');
+    rs.style.opacity = '0'; rs.style.transition = 'opacity 0.4s';
+    setTimeout(() => rs.style.opacity = '1', 50);
+  }, 320);
+
+  clearTimeout(commentTimer);
+}
+
+// ── BACK TO TOC ──
+function backToTOC() {
+  clearTimeout(commentTimer);
+  const rs = document.getElementById('readSpread');
+  rs.style.opacity = '0';
+  setTimeout(() => {
+    rs.classList.remove('active');
+    buildTOC();
+    const toc = document.getElementById('tocSpread');
+    toc.classList.add('active');
+    toc.style.opacity = '0'; toc.style.transition = 'opacity 0.4s';
+    setTimeout(() => { toc.style.opacity = '1'; revealTOC(); }, 50);
+  }, 340);
+}
+
+// ── COMMENT ──
+function submitComment() {
+  const name = document.getElementById('cName').value.trim() || 'Anonymous';
+  const text = document.getElementById('cText').value.trim();
+  if (!text) return;
+  // Save the comment
+  const ch = chapters.find(c => c.id === currentChapterId);
+  comments.push({
+    id: nextCommentId++,
+    name,
+    text,
+    chapterId: currentChapterId,
+    chapterTitle: ch ? ch.title : 'Unknown Chapter',
+    date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
+  });
+  spawnConfetti();
+  document.getElementById('cForm').style.display = 'none';
+  document.getElementById('cTy').classList.add('show');
+  setTimeout(() => {
+    document.getElementById('commentOverlay').classList.remove('active');
+    document.getElementById('cForm').style.display = 'block';
+    document.getElementById('cTy').classList.remove('show');
+    document.getElementById('cName').value = '';
+    document.getElementById('cText').value = '';
+    returnToCover();
+  }, 2600);
+}
+
+function spawnConfetti() {
+  const cols = ['#c9972a','#e8b84b','#39ff14','#2d5a27','#f5d67a','#00ff88'];
+  for (let i = 0; i < 32; i++) {
+    const c = document.createElement('div');
+    c.style.cssText = `position:fixed;left:${15+Math.random()*70}%;top:18%;width:${6+Math.random()*9}px;height:${6+Math.random()*9}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation:confFall ${1.2+Math.random()*.9}s ease-in forwards;animation-delay:${Math.random()*.4}s;pointer-events:none;z-index:500;`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 2500);
+  }
+}
+
+function returnToCover() {
+  const toc = document.getElementById('tocSpread');
+  const rs = document.getElementById('readSpread');
+  toc.style.opacity = '0'; rs.style.opacity = '0';
+  setTimeout(() => {
+    toc.classList.remove('active'); rs.classList.remove('active');
+    const cover = document.getElementById('coverWrap');
+    cover.style.display = ''; cover.classList.remove('open');
+    cover.style.transition = 'none'; void cover.offsetWidth; cover.style.transition = '';
+    setTimeout(openBook, 2400);
+  }, 400);
+}
+
+// ── SECRET KEYBOARD SHORTCUT ──
+// Type "charmi" anywhere (no input focused) to open Writer's Studio
+let keyBuffer = '';
+const SECRET = 'charmi';
+document.addEventListener('keydown', e => {
+  // Don't trigger if user is typing in an input/textarea
+  const tag = document.activeElement.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+  keyBuffer += e.key.toLowerCase();
+  if (keyBuffer.length > SECRET.length) keyBuffer = keyBuffer.slice(-SECRET.length);
+  if (keyBuffer === SECRET) {
+    keyBuffer = '';
+    openWriter();
+  }
+});
+
+// ── WRITER ──
+function openWriter() {
+  buildChapterCards();
+  buildComments();
+  document.getElementById('writerPanel').classList.add('active');
+  // Flash secret badge
+  const flash = document.getElementById('secretFlash');
+  flash.classList.add('show');
+  setTimeout(() => flash.classList.remove('show'), 2200);
+}
+function closeWriter() {
+  document.getElementById('writerPanel').classList.remove('active');
+}
+// Close on backdrop click
+document.getElementById('writerPanel').addEventListener('click', e => {
+  if (e.target === document.getElementById('writerPanel')) closeWriter();
+});
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.w-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.w-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if (name === 'chapters') buildChapterCards();
+  if (name === 'comments') buildComments();
+}
+
+function publishChapter() {
+  const title = document.getElementById('wTitle').value.trim();
+  const content = document.getElementById('wContent').value.trim();
+  if (!title || !content) { showToast('Add a title and content first ✦'); return; }
+  const nv = document.getElementById('wNum').value;
+  const num = nv ? Math.max(0, parseInt(nv)-1) : chapters.length;
+  chapters.push({ id: nextId++, title, content, num });
+  chapters.sort((a,b) => a.num - b.num);
+  document.getElementById('wTitle').value = '';
+  document.getElementById('wContent').value = '';
+  document.getElementById('wNum').value = '';
+  buildTOC(); buildChapterCards();
+  showToast('Published to Diary ✦');
+}
+
+function buildComments() {
+  const el = document.getElementById('wComments');
+  if (!comments.length) {
+    el.innerHTML = '<p class="w-empty">No comments yet. They\'ll appear here once readers leave their thoughts.</p>';
+    return;
+  }
+  el.innerHTML = comments.slice().reverse().map(c => `
+    <div class="w-comment-card" id="comment-${c.id}">
+      <div class="w-comment-meta">
+        <span class="w-comment-author">✦ ${c.name}</span>
+        <span class="w-comment-chapter">${c.chapterTitle} · ${c.date}</span>
+      </div>
+      <div class="w-comment-text">"${c.text}"</div>
+      <div class="w-comment-footer">
+        <button class="w-act dl" onclick="deleteComment(${c.id})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+function deleteComment(id) {
+  const card = document.getElementById('comment-'+id);
+  if (card) { card.style.opacity = '0'; card.style.transition = 'opacity 0.3s'; }
+  setTimeout(() => {
+    comments = comments.filter(c => c.id !== id);
+    buildComments();
+  }, 320);
+  showToast('Comment removed ✦');
+}
+
+function buildChapterCards() {
+  const el = document.getElementById('wCards');
+  if (!chapters.length) { el.innerHTML = '<p class="w-empty">No chapters yet. Write your first entry!</p>'; return; }
+  el.innerHTML = chapters.map(ch => `
+    <div class="w-ccard">
+      <div>
+        <div class="w-ccard-title">${ch.title}</div>
+        <div class="w-ccard-meta">Chapter ${ROMANS[ch.num]||ch.num+1} · ${ch.content.trim().split(/\s+/).length} words</div>
+      </div>
+      <div class="w-actions">
+        <button class="w-act ed" onclick="editChapter(${ch.id})">Edit</button>
+        <button class="w-act dl" onclick="deleteChapter(${ch.id})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+function editChapter(id) {
+  const ch = chapters.find(c => c.id === id);
+  if (!ch) return;
+  chapters = chapters.filter(c => c.id !== id);
+  document.getElementById('wTitle').value = ch.title;
+  document.getElementById('wContent').value = ch.content;
+  document.getElementById('wNum').value = ch.num + 1;
+  document.querySelectorAll('.w-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.w-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-btn-write').classList.add('active');
+  document.getElementById('tab-write').classList.add('active');
+  showToast('Loaded for editing ✦');
+}
+
+function deleteChapter(id) {
+  chapters = chapters.filter(c => c.id !== id);
+  buildTOC(); buildChapterCards();
+  showToast('Chapter removed ✦');
+}
+
+// Text tools
+function wWrap(a,b) {
+  const ta = document.getElementById('wContent');
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  const sel = ta.value.substring(s,e)||'text';
+  ta.value = ta.value.substring(0,s)+a+sel+b+ta.value.substring(e);
+  ta.focus();
+}
+function wBreak() {
+  const ta = document.getElementById('wContent');
+  const s = ta.selectionStart;
+  ta.value = ta.value.substring(0,s)+'\n\n'+ta.value.substring(s);
+  ta.selectionStart = ta.selectionEnd = s+2; ta.focus();
+}
+function wIns(str) {
+  const ta = document.getElementById('wContent');
+  const s = ta.selectionStart;
+  ta.value = ta.value.substring(0,s)+str+ta.value.substring(s);
+  ta.selectionStart = ta.selectionEnd = s+str.length; ta.focus();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+</script>
+</body>
+</html>
