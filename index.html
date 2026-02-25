@@ -9,64 +9,53 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --green: #2d5a27;
-  --green-dark: #1a3a16;
-  --green-light: #3d7a35;
-  --gold: #c9972a;
+  --gold:       #c9972a;
   --gold-light: #e8b84b;
-  --gold-bright: #f5d67a;
-  --paper: #f2e8ce;
-  --ink: #1e0f00;
-  --neon: #39ff14;
-  --neon2: #00ff88;
+  --gold-bright:#f5d67a;
+  --gold-dark:  #8b6010;
+  --paper:      #f5ecd4;
+  --paper-aged: #ede0b8;
+  --ink:        #1a0e00;
+  --green:      #2d5a27;
+  --green-dark: #1a3a16;
+  --neon:       #39ff14;
 }
 
 body {
-  background: #050f05;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-family: 'IM Fell English', serif;
-  overflow: hidden;
-  position: relative;
+  overflow: hidden; position: relative;
+  background: #060f08;
 }
 
-/* ── NEON BG ── */
-.bg-glow {
-  position: fixed; inset: 0;
+/* ══ GOLDEN GRADIENT BACKGROUND ══ */
+.bg {
+  position: fixed; inset: 0; z-index: 0;
   background:
-    radial-gradient(ellipse 70% 60% at 15% 50%, rgba(57,255,20,0.20) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 75% at 85% 30%, rgba(0,255,136,0.13) 0%, transparent 55%),
-    radial-gradient(ellipse 45% 45% at 55% 85%, rgba(57,255,20,0.09) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 40% at 50% 10%, rgba(0,200,80,0.07) 0%, transparent 50%),
-    linear-gradient(135deg, #040e04 0%, #071307 40%, #030903 70%, #060d06 100%);
-  pointer-events: none; z-index: 0;
+    radial-gradient(ellipse 70% 60% at 20% 50%, rgba(30,100,60,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 75% at 80% 30%, rgba(201,151,42,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 55% 85%, rgba(20,80,45,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 8%,  rgba(201,151,42,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 100% at 0% 50%, rgba(20,80,45,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 100% at 100% 50%, rgba(20,80,45,0.15) 0%, transparent 60%),
+    linear-gradient(160deg, #040d07 0%, #060f09 35%, #040d07 65%, #05100a 85%, #030a06 100%);
+  pointer-events: none;
 }
+
+/* Subtle gold grid */
 .bg-grid {
-  position: fixed; inset: 0;
+  position: fixed; inset: 0; z-index: 0;
   background-image:
-    linear-gradient(rgba(57,255,20,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(57,255,20,0.035) 1px, transparent 1px);
-  background-size: 55px 55px;
-  pointer-events: none; z-index: 0;
-}
-/* Neon edge glow */
-.bg-glow::after {
-  content: '';
-  position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse 30% 100% at 0% 50%, rgba(57,255,20,0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 30% 100% at 100% 50%, rgba(57,255,20,0.10) 0%, transparent 60%);
+    linear-gradient(rgba(30,100,60,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,100,60,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
   pointer-events: none;
 }
 
 /* Particles */
 .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
-.particle {
-  position: absolute; border-radius: 50%;
-  animation: floatUp linear infinite;
-}
+.particle { position: absolute; border-radius: 50%; animation: floatUp linear infinite; }
 @keyframes floatUp {
   0%   { transform: translateY(110vh); opacity: 0; }
   8%   { opacity: 1; }
@@ -74,33 +63,29 @@ body {
   100% { transform: translateY(-10vh); opacity: 0; }
 }
 
-/* ── SCENE ── */
-.scene {
-  perspective: 2800px;
-  position: relative; z-index: 2;
-}
+/* ══ SCENE ══ */
+.scene { perspective: 1800px; position: relative; z-index: 2; }
 
-/* ── BOOK (landscape, two-page) ── */
+/* ══ BOOK ══ */
 .book {
-  width: 800px;
-  height: 530px;
-  position: relative;
-  transform-style: preserve-3d;
+  width: 820px; height: 540px;
+  position: relative; transform-style: preserve-3d;
   filter:
-    drop-shadow(0 40px 80px rgba(0,0,0,0.9))
-    drop-shadow(0 0 60px rgba(57,255,20,0.18))
-    drop-shadow(0 0 120px rgba(57,255,20,0.07));
+    drop-shadow(0 50px 100px rgba(0,0,0,0.85))
+    drop-shadow(0 0 70px rgba(20,120,60,0.3))
+    drop-shadow(0 0 40px rgba(201,151,42,0.2))
+    drop-shadow(0 0 140px rgba(20,100,50,0.12));
 }
 
-/* ── COVER ── */
+/* ══ COVER ══ */
 .cover-wrap {
   position: absolute; inset: 0;
   transform-style: preserve-3d;
   transform-origin: left center;
-  transition: transform 1.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  transition: transform 1.6s cubic-bezier(0.4, 0.0, 0.2, 1.0);
   z-index: 10;
 }
-.cover-wrap.open { transform: rotateY(-165deg); }
+.cover-wrap.open { transform: rotateY(-175deg); }
 
 .cover-front {
   position: absolute; inset: 0;
@@ -111,511 +96,567 @@ body {
   position: absolute; inset: 0;
   backface-visibility: hidden;
   transform: rotateY(180deg);
-  background: var(--paper);
+  background: var(--paper-aged);
   border-radius: 14px 3px 3px 14px;
-  box-shadow: inset 0 0 30px rgba(0,0,0,0.12);
+  box-shadow: inset 0 0 40px rgba(139,96,16,0.15);
 }
 
+/* Deep green cover — like Vicar of Wakefield */
 .cover-skin {
   width: 100%; height: 100%;
-  background: linear-gradient(155deg, #306528 0%, #3d7a30 20%, #2d5a27 48%, #244e1e 72%, #1a3a16 100%);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, #236650 0%, #1a5040 30%, #143d30 60%, #0f2d23 100%);
   border-radius: 3px 14px 14px 3px;
   position: relative; overflow: hidden;
-  box-shadow: inset -6px 0 18px rgba(0,0,0,0.4);
 }
+
+/* Leather grain texture */
 .cover-skin::before {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    repeating-linear-gradient(47deg, rgba(0,0,0,0.035) 0, rgba(0,0,0,0.035) 1px, transparent 1px, transparent 7px),
-    repeating-linear-gradient(-47deg, rgba(255,255,255,0.018) 0, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 7px);
+    repeating-linear-gradient(47deg, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.08) 1px, transparent 1px, transparent 7px),
+    repeating-linear-gradient(-47deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 7px);
+  border-radius: 3px 14px 14px 3px;
 }
 
+/* Sheen on green */
+.cover-skin::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(125deg, rgba(255,255,255,0.07) 0%, transparent 45%, rgba(0,0,0,0.2) 100%);
+  border-radius: 3px 14px 14px 3px;
+  pointer-events: none;
+}
+
+/* Spine — dark green */
 .spine {
-  position: absolute; left: 0; top: 0; bottom: 0; width: 24px;
-  background: linear-gradient(90deg, #080f07 0%, #112010 50%, #2d5a27 100%);
-  border-right: 1px solid rgba(201,151,42,0.3);
+  position: absolute; left: 0; top: 0; bottom: 0; width: 26px;
+  background: linear-gradient(90deg, #061a12 0%, #0f2d23 50%, #163d30 100%);
+  border-right: 1px solid rgba(201,151,42,0.55);
+  box-shadow: inset -3px 0 8px rgba(0,0,0,0.4);
 }
 
+/* Gold border frame */
 .cover-border {
-  position: absolute; inset: 15px;
+  position: absolute; inset: 16px;
   border: 2px solid var(--gold);
-  box-shadow: inset 0 0 0 5px rgba(201,151,42,0.09), 0 0 0 1px rgba(201,151,42,0.25);
+  box-shadow:
+    0 0 0 1px rgba(201,151,42,0.3),
+    inset 0 0 20px rgba(0,0,0,0.2);
   pointer-events: none;
 }
 .cover-border::before {
   content: '';
   position: absolute; inset: 7px;
-  border: 1px solid rgba(201,151,42,0.32);
+  border: 1px solid rgba(201,151,42,0.55);
 }
 
 /* Corner ornaments */
-.csq { position: absolute; width: 62px; height: 62px; }
-.csq.tl { top: 15px; left: 15px; }
-.csq.tr { top: 15px; right: 15px; transform: scaleX(-1); }
-.csq.bl { bottom: 15px; left: 15px; transform: scaleY(-1); }
-.csq.br { bottom: 15px; right: 15px; transform: scale(-1,-1); }
+.csq { position: absolute; width: 65px; height: 65px; }
+.csq.tl { top: 16px; left: 16px; }
+.csq.tr { top: 16px; right: 16px; transform: scaleX(-1); }
+.csq.bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+.csq.br { bottom: 16px; right: 16px; transform: scale(-1,-1); }
 
-/* Botanical SVG */
+/* Botanical vines on cover */
 .cover-bota { position: absolute; inset: 0; pointer-events: none; }
 
-/* Title */
+/* Title block */
 .cover-title-wrap {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -52%);
-  text-align: center; width: 52%; z-index: 5;
+  text-align: center; width: 54%; z-index: 5;
 }
 .c-main-title {
   font-family: 'Cinzel Decorative', cursive;
-  font-size: 3rem; font-weight: 900;
+  font-size: 3.1rem; font-weight: 900;
   color: var(--gold-light);
   line-height: 1.12; letter-spacing: 2px;
   text-shadow:
-    0 0 28px rgba(232,184,75,0.95),
-    0 0 55px rgba(201,151,42,0.45),
-    0 3px 8px rgba(0,0,0,0.95);
-  animation: glow 4s ease-in-out infinite alternate;
+    0 0 30px rgba(201,151,42,0.9),
+    0 0 60px rgba(201,151,42,0.4),
+    0 2px 6px rgba(0,0,0,0.8);
+  animation: titleGlow 4s ease-in-out infinite alternate;
 }
-@keyframes glow {
-  from { text-shadow: 0 0 22px rgba(232,184,75,0.7), 0 3px 8px rgba(0,0,0,0.95); }
-  to   { text-shadow: 0 0 45px rgba(245,214,122,1), 0 0 90px rgba(201,151,42,0.5), 0 3px 8px rgba(0,0,0,0.95); }
+@keyframes titleGlow {
+  from { text-shadow: 0 0 20px rgba(201,151,42,0.7), 0 2px 6px rgba(0,0,0,0.8); }
+  to   { text-shadow: 0 0 40px rgba(245,214,122,1), 0 0 80px rgba(201,151,42,0.5), 0 2px 6px rgba(0,0,0,0.8); }
 }
 .c-divider {
-  width: 78%; margin: 11px auto;
-  height: 1px;
+  width: 80%; margin: 12px auto;
+  height: 1.5px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 .c-byline {
   font-family: 'Cinzel', serif;
   font-size: 0.78rem; color: var(--gold);
-  letter-spacing: 4px; opacity: 0.88;
+  letter-spacing: 4px;
+  opacity: 0.88;
 }
 
-/* ── PAGES BEHIND COVER ── */
+/* ══ PAGES BACKGROUND ══ */
 .pages-bg {
   position: absolute; inset: 0;
   background: var(--paper);
   border-radius: 3px 14px 14px 3px;
-  box-shadow: inset 0 0 40px rgba(139,90,43,0.1);
 }
 
-/* ── TWO-PAGE SPREAD ── */
-.spread {
+/* Page stack illusion on right edge */
+.pages-bg::after {
+  content: '';
+  position: absolute; right: -3px; top: 3px; bottom: 3px; width: 6px;
+  background: repeating-linear-gradient(0deg, #e8dbb8, #e8dbb8 1px, #f0e4c0 1px, #f0e4c0 3px);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ══ TWO-PAGE SPREAD (shared base) ══ */
+.spread, .read-spread {
   position: absolute; inset: 0;
   display: none;
   border-radius: 3px 14px 14px 3px;
   overflow: hidden;
   background: var(--paper);
 }
-.spread.active { display: flex; }
+.spread.active, .read-spread.active { display: flex; }
 
-.pg {
-  flex: 1;
-  position: relative;
-  padding: 38px 32px 42px 38px;
-  overflow-y: auto;
-  scrollbar-width: none;
+/* Center gutter shadow */
+.spread::after, .read-spread::after {
+  content: '';
+  position: absolute; left: 50%; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(139,96,16,0.12) 10%,
+    rgba(139,96,16,0.18) 50%,
+    rgba(139,96,16,0.12) 90%,
+    transparent 100%);
+  box-shadow: -3px 0 8px rgba(0,0,0,0.06), 3px 0 8px rgba(0,0,0,0.06);
+  pointer-events: none; z-index: 5;
 }
-.pg::-webkit-scrollbar { display: none; }
-.pg.right { padding: 38px 38px 42px 32px; border-left: 1px solid rgba(0,0,0,0.09); }
 
-/* Paper lines */
-.pg::before {
+/* Individual pages */
+.pg, .rpg {
+  flex: 1; position: relative;
+  overflow-y: auto; scrollbar-width: none;
+}
+.pg::-webkit-scrollbar, .rpg::-webkit-scrollbar { display: none; }
+
+/* Warm aged paper gradient per page */
+.pg, .rpg {
+  background: linear-gradient(180deg, #f8f0d8 0%, #f3e8c8 40%, #f0e4c0 100%);
+}
+.pg { padding: 44px 36px 28px 44px; }
+.pg.right { padding: 44px 44px 28px 36px; }
+.rpg { padding: 40px 32px 28px 44px; }
+.rpg.right { padding: 40px 44px 28px 32px; }
+
+/* Subtle lined paper */
+.pg::before, .rpg::before {
   content: '';
   position: absolute; inset: 0;
   background: repeating-linear-gradient(
-    0deg, transparent, transparent 28px,
-    rgba(0,0,0,0.055) 28px, rgba(0,0,0,0.055) 29px
+    0deg, transparent, transparent 29px,
+    rgba(139,96,16,0.07) 29px, rgba(139,96,16,0.07) 30px
   );
+  pointer-events: none; z-index: 0;
+}
+
+/* Left margin red line */
+.pg::after {
+  content: '';
+  position: absolute; left: 58px; top: 0; bottom: 0; width: 1px;
+  background: rgba(200,80,80,0.2);
   pointer-events: none;
 }
+.rpg::after {
+  content: '';
+  position: absolute; left: 58px; top: 0; bottom: 0; width: 1px;
+  background: rgba(200,80,80,0.2);
+  pointer-events: none;
+}
+.pg.right::after, .rpg.right::after { display: none; }
 
-/* TOC */
+/* Make content sit above the lines */
+.pg > *, .rpg > * { position: relative; z-index: 1; }
+
+/* ══ TOC ══ */
 .toc-head {
   font-family: 'Cinzel Decorative', cursive;
-  font-size: 1.05rem; color: var(--green-dark);
-  text-align: center; margin-bottom: 7px;
+  font-size: 1.05rem; color: #4a2c00;
+  text-align: center; margin-bottom: 6px;
+  letter-spacing: 1px;
 }
 .toc-rule {
-  width: 100%; height: 1px;
+  width: 90%; margin: 0 auto 24px;
+  height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin-bottom: 22px; opacity: 0.7;
+  opacity: 0.8;
 }
 .toc-row {
-  display: flex; align-items: baseline; gap: 0;
-  margin-bottom: 15px; cursor: pointer;
-  padding: 5px 7px; border-radius: 3px;
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 0; cursor: pointer;
+  padding: 9px 8px; border-radius: 3px;
   transition: background 0.25s;
-  opacity: 0; transform: translateX(8px);
+  opacity: 0; transform: translateX(10px);
+  border-bottom: 1px solid rgba(201,151,42,0.1);
 }
-.toc-row.show { animation: rowIn 0.45s ease forwards; }
+.toc-row:last-child { border-bottom: none; }
+.toc-row.show { animation: rowIn 0.4s ease forwards; }
 @keyframes rowIn { to { opacity: 1; transform: translateX(0); } }
-.toc-row:hover { background: rgba(45,90,39,0.09); }
-.toc-row:hover .toc-rname { color: var(--green); }
-.toc-rnum { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--gold); min-width: 24px; flex-shrink: 0; }
-.toc-rname { font-family: 'Lora', serif; font-size: 0.9rem; font-style: italic; color: var(--ink); flex: 1; transition: color 0.25s; }
-.toc-rdots { flex: 1; border-bottom: 1px dotted rgba(0,0,0,0.2); margin: 0 7px; margin-bottom: 3px; min-width: 20px; }
-.toc-rpg { font-family: 'Cinzel', serif; font-size: 0.65rem; color: rgba(0,0,0,0.36); }
+.toc-row:hover { background: rgba(201,151,42,0.08); }
+.toc-row:hover .toc-rname { color: #4a2c00; }
+.toc-rnum {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  color: var(--gold-dark); min-width: 26px; flex-shrink: 0;
+}
+.toc-rname {
+  font-family: 'Lora', serif; font-size: 0.9rem;
+  font-style: italic; color: var(--ink); flex: 1;
+  transition: color 0.25s;
+}
+.toc-rdots {
+  flex: 1; border-bottom: 1px dotted rgba(0,0,0,0.18);
+  margin: 0 8px; margin-bottom: 2px; min-width: 20px; max-width: 60px;
+}
+.toc-rpg {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  color: rgba(0,0,0,0.3);
+}
 
-/* Right page decoration (TOC) */
+/* TOC right page deco */
 .toc-deco {
   width: 100%; height: 100%;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  opacity: 0.35;
+  opacity: 0.3;
 }
 
-/* Page numbers */
-.pg-num {
-  position: absolute; bottom: 15px;
-  font-family: 'Cinzel', serif;
-  font-size: 0.65rem; color: rgba(0,0,0,0.32);
-}
-.pg .pg-num { left: 38px; }
-.pg.right .pg-num { right: 38px; left: auto; }
-
-/* ── READING SPREAD ── */
-.read-spread {
-  position: absolute; inset: 0;
-  display: none; border-radius: 3px 14px 14px 3px;
-  overflow: hidden; background: var(--paper);
-}
-.read-spread.active { display: flex; }
-
-.rpg {
-  flex: 1; position: relative;
-  padding: 36px 30px 50px 36px;
-  overflow-y: auto; scrollbar-width: none;
-}
-.rpg::-webkit-scrollbar { display: none; }
-.rpg.right { padding: 36px 36px 50px 30px; border-left: 1px solid rgba(0,0,0,0.09); }
-.rpg::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    0deg, transparent, transparent 28px,
-    rgba(0,0,0,0.055) 28px, rgba(0,0,0,0.055) 29px
-  );
-  pointer-events: none;
-}
-
+/* ══ READING PAGE ══ */
 .r-chapter-title {
   font-family: 'Cinzel Decorative', cursive;
-  font-size: 0.9rem; color: var(--green-dark);
-  margin-bottom: 5px;
+  font-size: 0.95rem; color: #4a2c00;
+  margin-bottom: 4px; text-align: center;
 }
 .r-rule {
-  width: 100%; height: 1px;
+  width: 80%; margin: 0 auto 18px;
+  height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin-bottom: 16px; opacity: 0.6;
+  opacity: 0.7;
 }
 .r-text {
   font-family: 'Lora', serif;
-  font-size: 0.91rem; line-height: 1.95;
+  font-size: 0.92rem; line-height: 2.05;
   color: var(--ink); text-align: justify;
 }
-.r-text p { margin-bottom: 0; opacity: 0; transform: translateY(7px); animation: pIn 0.45s ease forwards; }
+.r-text p {
+  margin-bottom: 14px;
+  opacity: 0; transform: translateY(6px);
+  animation: pIn 0.5s ease forwards;
+}
 @keyframes pIn { to { opacity: 1; transform: translateY(0); } }
 
+/* Beautiful drop cap */
 .drop-cap::first-letter {
   font-family: 'UnifrakturMaguntia', cursive;
-  font-size: 4.8rem; float: left;
-  line-height: 0.62; margin: 10px 9px 0 0;
-  color: var(--green-dark);
-  text-shadow: 1px 1px 0 var(--gold);
+  font-size: 5rem; float: left;
+  line-height: 0.6; margin: 10px 10px 0 0;
+  color: #4a2c00;
+  text-shadow: 1px 1px 0 var(--gold), 2px 2px 4px rgba(0,0,0,0.2);
 }
 
+/* ══ BOTTOM BAR — clean, only Comment button ══ */
+.page-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, transparent 0%, rgba(243,232,200,0.95) 40%);
+  border-top: 1px solid rgba(201,151,42,0.15);
+}
+
+/* Back button — left page only, very subtle */
 .r-back-btn {
-  position: absolute; bottom: 14px; left: 36px;
-  font-family: 'Cinzel', serif; font-size: 0.6rem;
-  color: var(--gold); cursor: pointer;
+  position: absolute; left: 44px;
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  color: rgba(139,96,16,0.55); cursor: pointer;
   letter-spacing: 2px; text-transform: uppercase;
   background: none; border: none; transition: color 0.25s;
 }
-.r-back-btn:hover { color: var(--green-dark); }
-.r-pg-num {
-  position: absolute; bottom: 14px;
-  font-family: 'Cinzel', serif; font-size: 0.63rem; color: rgba(0,0,0,0.32);
-}
-.rpg .r-pg-num { left: 36px; padding-left: 60px; }
-.rpg.right .r-pg-num { right: 36px; }
+.r-back-btn:hover { color: var(--gold-dark); }
 
-/* ── COMMENT OVERLAY ── */
+/* Comment button — right page only, centered at bottom */
+.r-comment-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem; letter-spacing: 2px;
+  color: #4a2c00;
+  background: linear-gradient(135deg, rgba(201,151,42,0.22), rgba(201,151,42,0.10));
+  border: 1.5px solid rgba(201,151,42,0.5);
+  border-radius: 30px;
+  padding: 7px 22px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+.r-comment-btn:hover {
+  background: linear-gradient(135deg, rgba(201,151,42,0.38), rgba(201,151,42,0.22));
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(201,151,42,0.25);
+}
+
+/* ══ COMMENT OVERLAY ══ */
 .overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(4,12,4,0.9); z-index: 100;
+  background: rgba(20,11,0,0.88); z-index: 100;
   align-items: center; justify-content: center;
-  backdrop-filter: blur(7px);
+  backdrop-filter: blur(8px);
 }
-.overlay.active { display: flex; animation: fadeIn 0.4s ease; }
+.overlay.active { display: flex; animation: fadeIn 0.35s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .c-card {
-  background: var(--paper); border: 2px solid var(--gold);
-  border-radius: 10px; padding: 38px; width: 450px; max-width: 92vw;
-  box-shadow: 0 0 90px rgba(57,255,20,0.13), 0 0 35px rgba(201,151,42,0.22), 0 28px 70px rgba(0,0,0,0.75);
+  background: var(--paper);
+  border: 2px solid var(--gold);
+  border-radius: 12px; padding: 40px; width: 460px; max-width: 92vw;
+  box-shadow:
+    0 0 80px rgba(201,151,42,0.25),
+    0 0 160px rgba(201,151,42,0.10),
+    0 30px 80px rgba(0,0,0,0.7);
   animation: cardUp 0.5s cubic-bezier(0.34,1.56,0.64,1);
 }
-@keyframes cardUp { from { transform: translateY(22px) scale(0.96); opacity: 0; } to { transform: none; opacity: 1; } }
-.c-title { font-family: 'Cinzel Decorative', cursive; font-size: 1rem; color: var(--green-dark); text-align: center; margin-bottom: 4px; }
-.c-sub { font-family: 'Lora', serif; font-style: italic; font-size: 0.84rem; color: rgba(0,0,0,0.44); text-align: center; margin-bottom: 17px; }
-.c-hr { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin-bottom: 17px; }
+@keyframes cardUp { from { transform: translateY(20px) scale(0.96); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.c-title {
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 1rem; color: #4a2c00; text-align: center; margin-bottom: 5px;
+}
+.c-sub {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: 0.84rem; color: rgba(0,0,0,0.42); text-align: center; margin-bottom: 18px;
+}
+.c-hr { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin-bottom: 18px; }
 .c-name-in, .c-text-in {
-  width: 100%; background: rgba(255,255,255,0.55);
-  border: 1px solid rgba(201,151,42,0.4); border-radius: 4px;
+  width: 100%;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(201,151,42,0.38); border-radius: 5px;
   font-family: 'Lora', serif; font-size: 0.88rem; color: var(--ink);
   outline: none; transition: border-color 0.3s;
 }
-.c-name-in { padding: 10px 13px; margin-bottom: 10px; }
-.c-text-in { padding: 11px 13px; height: 88px; resize: none; display: block; }
-.c-name-in:focus, .c-text-in:focus { border-color: var(--gold); }
+.c-name-in { padding: 10px 13px; margin-bottom: 11px; display: block; }
+.c-text-in { padding: 11px 13px; height: 90px; resize: none; display: block; }
+.c-name-in:focus, .c-text-in:focus { border-color: var(--gold); background: rgba(255,255,255,0.8); }
 .c-btn {
-  width: 100%; margin-top: 13px; padding: 12px;
-  background: linear-gradient(135deg, var(--green), var(--green-dark));
-  border: 1px solid var(--gold); border-radius: 4px;
+  width: 100%; margin-top: 14px; padding: 12px;
+  background: linear-gradient(135deg, #4a2c00, #2e1a00);
+  border: 1px solid var(--gold); border-radius: 6px;
   color: var(--gold-light); font-family: 'Cinzel', serif;
-  font-size: 0.75rem; letter-spacing: 3px; cursor: pointer;
-  transition: all 0.3s;
+  font-size: 0.75rem; letter-spacing: 3px; cursor: pointer; transition: all 0.3s;
 }
-.c-btn:hover { box-shadow: 0 0 22px rgba(57,255,20,0.18); transform: translateY(-1px); }
-.c-ty { display: none; text-align: center; padding: 18px 0; }
+.c-btn:hover { box-shadow: 0 0 25px rgba(201,151,42,0.3); transform: translateY(-1px); }
+.c-ty { display: none; text-align: center; padding: 20px 0; }
 .c-ty.show { display: block; }
 .c-seal { font-size: 2.8rem; margin-bottom: 10px; animation: sealPop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
-@keyframes sealPop { from { transform: scale(0) rotate(-20deg); } to { transform: scale(1) rotate(0); } }
+@keyframes sealPop { from { transform: scale(0) rotate(-20deg); } to { transform: scale(1) rotate(0deg); } }
 
-/* ── WRITER PANEL (secret) ── */
+/* ══ WRITER PANEL ══ */
 .writer-panel {
   display: none; position: fixed; inset: 0;
-  background: rgba(4,12,4,0.93); z-index: 200;
+  background: rgba(15,8,0,0.93); z-index: 200;
   align-items: center; justify-content: center;
   backdrop-filter: blur(10px);
 }
 .writer-panel.active { display: flex; animation: fadeIn 0.35s ease; }
 
 .w-modal {
-  background: #0b180a; border: 2px solid rgba(201,151,42,0.45);
-  border-radius: 12px; width: 680px; max-width: 95vw; max-height: 92vh;
+  background: #1a0e00; border: 2px solid rgba(201,151,42,0.4);
+  border-radius: 14px; width: 700px; max-width: 95vw; max-height: 92vh;
   overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(201,151,42,0.3) transparent;
-  box-shadow: 0 0 70px rgba(57,255,20,0.14), 0 0 140px rgba(57,255,20,0.06), 0 35px 90px rgba(0,0,0,0.85);
+  box-shadow: 0 0 80px rgba(201,151,42,0.18), 0 40px 100px rgba(0,0,0,0.9);
 }
-
 .w-head {
-  padding: 26px 30px 18px; border-bottom: 1px solid rgba(201,151,42,0.18);
+  padding: 26px 30px 18px; border-bottom: 1px solid rgba(201,151,42,0.15);
   display: flex; justify-content: space-between; align-items: center;
-  position: sticky; top: 0; background: #0b180a; z-index: 5;
+  position: sticky; top: 0; background: #1a0e00; z-index: 5;
 }
 .w-title { font-family: 'Cinzel Decorative', cursive; font-size: 1rem; color: var(--gold-light); text-shadow: 0 0 20px rgba(201,151,42,0.4); }
-.w-close { background: none; border: none; color: rgba(201,151,42,0.55); font-size: 1.3rem; cursor: pointer; transition: color 0.2s; }
-.w-close:hover { color: var(--gold-light); }
-
-.w-secret-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(57,255,20,0.08); border: 1px solid rgba(57,255,20,0.25);
-  border-radius: 20px; padding: 2px 10px;
-  font-family: 'Cinzel', serif; font-size: 0.55rem;
-  letter-spacing: 2px; color: var(--neon); margin-left: 10px;
+.w-badge {
+  display: inline-flex; align-items: center;
+  background: rgba(201,151,42,0.1); border: 1px solid rgba(201,151,42,0.3);
+  border-radius: 20px; padding: 2px 10px; margin-left: 10px;
+  font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 2px; color: var(--gold);
 }
-
+.w-close { background: none; border: none; color: rgba(201,151,42,0.5); font-size: 1.3rem; cursor: pointer; transition: color 0.2s; }
+.w-close:hover { color: var(--gold-light); }
 .w-body { padding: 26px 30px 30px; }
 
 /* Tabs */
-.w-tabs { display: flex; gap: 4px; margin-bottom: 22px; border-bottom: 1px solid rgba(201,151,42,0.18); }
+.w-tabs { display: flex; gap: 4px; margin-bottom: 22px; border-bottom: 1px solid rgba(201,151,42,0.15); }
 .w-tab {
-  font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 2px;
-  color: rgba(201,151,42,0.45); padding: 8px 15px; cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 2px;
+  color: rgba(201,151,42,0.4); padding: 8px 16px; cursor: pointer;
   border-radius: 6px 6px 0 0; transition: all 0.25s;
   border: 1px solid transparent; border-bottom: none;
   margin-bottom: -1px; background: transparent;
 }
-.w-tab.active { color: var(--gold-light); border-color: rgba(201,151,42,0.28); background: rgba(201,151,42,0.06); }
-
+.w-tab.active { color: var(--gold-light); border-color: rgba(201,151,42,0.25); background: rgba(201,151,42,0.06); }
 .w-panel { display: none; }
 .w-panel.active { display: block; }
 
 /* Form */
-.w-lbl { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 2px; color: rgba(201,151,42,0.65); text-transform: uppercase; margin-bottom: 6px; display: block; }
+.w-lbl { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 2px; color: rgba(201,151,42,0.6); text-transform: uppercase; margin-bottom: 6px; display: block; }
 .w-in {
-  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,151,42,0.22);
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,151,42,0.2);
   border-radius: 6px; color: #e8dfc0; font-family: 'Lora', serif; font-size: 0.88rem;
-  padding: 10px 13px; outline: none; transition: border-color 0.3s; margin-bottom: 17px;
+  padding: 10px 13px; outline: none; transition: border-color 0.3s; margin-bottom: 16px;
 }
-.w-in:focus { border-color: rgba(201,151,42,0.55); background: rgba(255,255,255,0.05); }
+.w-in:focus { border-color: rgba(201,151,42,0.5); }
 .w-ta {
-  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,151,42,0.22);
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(201,151,42,0.2);
   border-radius: 6px; color: #e8dfc0; font-family: 'Lora', serif; font-size: 0.88rem;
-  line-height: 1.8; padding: 13px; outline: none; resize: vertical; min-height: 190px;
-  transition: border-color 0.3s; margin-bottom: 17px; display: block; width: 100%;
+  line-height: 1.85; padding: 13px; outline: none; resize: vertical; min-height: 200px;
+  transition: border-color 0.3s; margin-bottom: 16px; display: block;
 }
-.w-ta:focus { border-color: rgba(201,151,42,0.55); }
-
-/* Toolbar */
+.w-ta:focus { border-color: rgba(201,151,42,0.5); }
 .w-toolbar { display: flex; gap: 6px; margin-bottom: 9px; flex-wrap: wrap; }
 .w-tool {
-  padding: 5px 11px; background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,151,42,0.18); border-radius: 4px;
-  color: rgba(201,151,42,0.65); font-size: 0.72rem;
+  padding: 5px 11px; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,151,42,0.16); border-radius: 4px;
+  color: rgba(201,151,42,0.6); font-size: 0.7rem;
   cursor: pointer; font-family: 'Cinzel', serif; transition: all 0.2s;
 }
 .w-tool:hover { background: rgba(201,151,42,0.1); color: var(--gold-light); }
-
-.w-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.76rem; color: rgba(201,151,42,0.37); margin-top: -12px; margin-bottom: 16px; }
-
+.w-hint { font-family: 'Lora', serif; font-style: italic; font-size: 0.75rem; color: rgba(201,151,42,0.35); margin-top: -10px; margin-bottom: 16px; }
 .w-publish {
-  width: 100%; padding: 12px;
-  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  width: 100%; padding: 13px;
+  background: linear-gradient(135deg, #4a2c00, #2e1a00);
   border: 1px solid var(--gold); border-radius: 6px;
   color: var(--gold-light); font-family: 'Cinzel', serif;
-  font-size: 0.77rem; letter-spacing: 3px; cursor: pointer; transition: all 0.3s; margin-top: 5px;
+  font-size: 0.77rem; letter-spacing: 3px; cursor: pointer; transition: all 0.3s;
 }
-.w-publish:hover { box-shadow: 0 0 28px rgba(57,255,20,0.18), 0 0 12px rgba(201,151,42,0.28); transform: translateY(-1px); }
+.w-publish:hover { box-shadow: 0 0 25px rgba(201,151,42,0.25); transform: translateY(-1px); }
 
-/* Chapter cards */
-.w-cards { display: flex; flex-direction: column; gap: 11px; }
+/* Cards */
+.w-cards { display: flex; flex-direction: column; gap: 10px; }
 .w-ccard {
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(201,151,42,0.18);
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(201,151,42,0.15);
   border-radius: 8px; padding: 14px 16px;
   display: flex; justify-content: space-between; align-items: center;
   transition: border-color 0.25s;
 }
-.w-ccard:hover { border-color: rgba(201,151,42,0.36); }
+.w-ccard:hover { border-color: rgba(201,151,42,0.35); }
 .w-ccard-title { font-family: 'Lora', serif; font-style: italic; font-size: 0.9rem; color: #e8dfc0; }
-.w-ccard-meta { font-family: 'Cinzel', serif; font-size: 0.58rem; color: rgba(201,151,42,0.45); letter-spacing: 1px; margin-top: 4px; }
+.w-ccard-meta { font-family: 'Cinzel', serif; font-size: 0.57rem; color: rgba(201,151,42,0.42); letter-spacing: 1px; margin-top: 4px; }
 .w-actions { display: flex; gap: 7px; }
-.w-act { padding: 5px 10px; border-radius: 4px; font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 1px; cursor: pointer; border: none; transition: all 0.2s; }
-.w-act.ed { background: rgba(201,151,42,0.14); color: var(--gold); }
-.w-act.ed:hover { background: rgba(201,151,42,0.24); }
-.w-act.dl { background: rgba(180,40,40,0.14); color: #e88; }
-.w-act.dl:hover { background: rgba(180,40,40,0.24); }
-.w-empty { font-family: 'Lora', serif; font-style: italic; color: rgba(201,151,42,0.32); text-align: center; padding: 28px 0; font-size: 0.86rem; }
+.w-act { padding: 5px 10px; border-radius: 4px; font-family: 'Cinzel', serif; font-size: 0.57rem; letter-spacing: 1px; cursor: pointer; border: none; transition: all 0.2s; }
+.w-act.ed { background: rgba(201,151,42,0.12); color: var(--gold); }
+.w-act.ed:hover { background: rgba(201,151,42,0.22); }
+.w-act.dl { background: rgba(180,40,40,0.12); color: #e88; }
+.w-act.dl:hover { background: rgba(180,40,40,0.22); }
+.w-empty { font-family: 'Lora', serif; font-style: italic; color: rgba(201,151,42,0.3); text-align: center; padding: 30px 0; font-size: 0.86rem; }
 
-/* Secret key hint (shown briefly when studio opens) */
+/* Comment cards */
+.w-comment-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(201,151,42,0.15);
+  border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+  transition: border-color 0.25s opacity 0.3s;
+}
+.w-comment-card:hover { border-color: rgba(201,151,42,0.35); }
+.w-comment-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+.w-comment-author { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--gold); letter-spacing: 1px; }
+.w-comment-chapter { font-family: 'Cinzel', serif; font-size: 0.56rem; color: rgba(201,151,42,0.38); }
+.w-comment-text { font-family: 'Lora', serif; font-style: italic; font-size: 0.83rem; color: #c8bfa0; line-height: 1.6; margin-bottom: 9px; }
+.w-comment-footer { display: flex; justify-content: flex-end; }
+
+/* Secret flash */
 .secret-flash {
-  position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
-  background: rgba(11,24,10,0.95); border: 1px solid rgba(57,255,20,0.35);
-  border-radius: 8px; padding: 10px 22px;
-  font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 2px;
-  color: var(--neon); z-index: 300;
+  position: fixed; top: 22px; left: 50%; transform: translateX(-50%);
+  background: rgba(26,14,0,0.96); border: 1px solid rgba(201,151,42,0.45);
+  border-radius: 8px; padding: 10px 24px;
+  font-family: 'Cinzel', serif; font-size: 0.66rem; letter-spacing: 2px;
+  color: var(--gold-light); z-index: 300;
   opacity: 0; transition: opacity 0.4s;
-  box-shadow: 0 0 20px rgba(57,255,20,0.2);
+  box-shadow: 0 0 20px rgba(201,151,42,0.2);
   pointer-events: none;
 }
 .secret-flash.show { opacity: 1; }
 
-/* Comment cards in writer */
-.w-comment-card {
-  background: rgba(255,255,255,0.03); border: 1px solid rgba(201,151,42,0.18);
-  border-radius: 8px; padding: 14px 16px;
-  transition: border-color 0.25s; margin-bottom: 11px;
-}
-.w-comment-card:hover { border-color: rgba(201,151,42,0.36); }
-.w-comment-meta {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 7px;
-}
-.w-comment-author { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--gold); letter-spacing: 1px; }
-.w-comment-chapter { font-family: 'Cinzel', serif; font-size: 0.58rem; color: rgba(201,151,42,0.4); letter-spacing: 1px; }
-.w-comment-text { font-family: 'Lora', serif; font-style: italic; font-size: 0.84rem; color: #c8bfa0; line-height: 1.6; margin-bottom: 10px; }
-.w-comment-footer { display: flex; justify-content: flex-end; }
-
-/* Comment button on reading page */
-.r-comment-btn {
-  position: absolute;
-  bottom: 14px; right: 36px;
-  font-family: 'Cinzel', serif;
-  font-size: 0.68rem;
-  letter-spacing: 2px;
-  color: var(--green-dark);
-  background: linear-gradient(135deg, rgba(201,151,42,0.18), rgba(201,151,42,0.08));
-  border: 1px solid rgba(201,151,42,0.45);
-  border-radius: 20px;
-  padding: 6px 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.r-comment-btn:hover {
-  background: linear-gradient(135deg, rgba(201,151,42,0.32), rgba(201,151,42,0.18));
-  border-color: var(--gold);
-  color: var(--green-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(201,151,42,0.2);
-}
-
 /* Toast */
 .toast {
   position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(60px);
-  background: var(--green-dark); border: 1px solid var(--gold);
+  background: #2e1a00; border: 1px solid var(--gold);
   border-radius: 8px; padding: 11px 22px;
-  font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 2px;
+  font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 2px;
   color: var(--gold-light); z-index: 400;
-  box-shadow: 0 0 20px rgba(57,255,20,0.18);
+  box-shadow: 0 0 20px rgba(201,151,42,0.2);
   transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
 /* Confetti */
 @keyframes confFall {
-  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
   100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
 </style>
 </head>
 <body>
 
-<div class="bg-glow"></div>
+<div class="bg"></div>
 <div class="bg-grid"></div>
 <div class="particles" id="particles"></div>
 
 <div class="scene">
   <div class="book" id="book">
 
-    <!-- Pages background -->
+    <!-- Pages bg -->
     <div class="pages-bg"></div>
 
     <!-- TOC SPREAD -->
     <div class="spread" id="tocSpread">
-      <!-- Left: TOC -->
       <div class="pg">
         <div class="toc-head">Table of Contents</div>
         <div class="toc-rule"></div>
         <div id="tocList"></div>
-        <span class="pg-num">i</span>
       </div>
-      <!-- Right: decorative -->
       <div class="pg right">
         <div class="toc-deco">
-          <svg width="130" height="170" viewBox="0 0 130 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M65 160 C65 160 65 85 65 18" stroke="#2d5a27" stroke-width="1.6" fill="none"/>
-            <path d="M65 130 C65 130 32 108 12 82" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
-            <path d="M65 105 C65 105 95 88 115 65" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
-            <path d="M65 80 C65 80 36 62 20 42" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
-            <path d="M65 58 C65 58 90 42 108 25" stroke="#2d5a27" stroke-width="1.1" fill="none"/>
-            <ellipse cx="10" cy="80" rx="10" ry="6" fill="#2d5a27" transform="rotate(-28 10 80)" opacity="0.7"/>
-            <ellipse cx="116" cy="63" rx="10" ry="6" fill="#2d5a27" transform="rotate(22 116 63)" opacity="0.7"/>
-            <ellipse cx="18" cy="40" rx="9" ry="5.5" fill="#2d5a27" transform="rotate(-38 18 40)" opacity="0.7"/>
-            <ellipse cx="109" cy="23" rx="9" ry="5.5" fill="#2d5a27" transform="rotate(18 109 23)" opacity="0.7"/>
-            <circle cx="65" cy="18" r="5" fill="#c9972a" opacity="0.85"/>
-            <circle cx="65" cy="160" r="4" fill="#2d5a27" opacity="0.6"/>
-            <circle cx="65" cy="80" r="2" fill="#c9972a" opacity="0.5"/>
+          <svg width="140" height="180" viewBox="0 0 140 180" fill="none">
+            <path d="M70 170 C70 170 70 90 70 15" stroke="#8b6010" stroke-width="1.8" fill="none"/>
+            <path d="M70 140 C70 140 34 116 12 88" stroke="#8b6010" stroke-width="1.2" fill="none"/>
+            <path d="M70 112 C70 112 102 95 122 70" stroke="#8b6010" stroke-width="1.2" fill="none"/>
+            <path d="M70 84 C70 84 38 65 20 42" stroke="#8b6010" stroke-width="1.2" fill="none"/>
+            <path d="M70 58 C70 58 96 44 115 26" stroke="#8b6010" stroke-width="1.2" fill="none"/>
+            <ellipse cx="10" cy="86" rx="11" ry="6.5" fill="#8b6010" transform="rotate(-30 10 86)" opacity="0.7"/>
+            <ellipse cx="123" cy="68" rx="11" ry="6.5" fill="#8b6010" transform="rotate(24 123 68)" opacity="0.7"/>
+            <ellipse cx="18" cy="40" rx="10" ry="6" fill="#8b6010" transform="rotate(-40 18 40)" opacity="0.7"/>
+            <ellipse cx="116" cy="24" rx="10" ry="6" fill="#8b6010" transform="rotate(18 116 24)" opacity="0.7"/>
+            <circle cx="70" cy="15" r="5.5" fill="#c9972a" opacity="0.9"/>
+            <circle cx="70" cy="170" r="4" fill="#8b6010" opacity="0.6"/>
+            <circle cx="70" cy="84" r="2.5" fill="#c9972a" opacity="0.55"/>
+            <circle cx="70" cy="112" r="1.5" fill="#c9972a" opacity="0.4"/>
           </svg>
-          <p style="font-family:'Cinzel',serif;font-size:0.62rem;color:#2d5a27;letter-spacing:3px;margin-top:18px;">Est. 2026</p>
+          <p style="font-family:'Cinzel',serif;font-size:0.62rem;color:#8b6010;letter-spacing:3px;margin-top:20px;opacity:0.7;">Est. 2026</p>
         </div>
-        <span class="pg-num" style="right:38px;left:auto">ii</span>
       </div>
     </div>
 
     <!-- READING SPREAD -->
     <div class="read-spread" id="readSpread">
+      <!-- Left page: text + back button at bottom -->
       <div class="rpg">
         <div class="r-chapter-title" id="rTitle"></div>
         <div class="r-rule"></div>
         <div class="r-text" id="rTextLeft"></div>
-        <button class="r-back-btn" onclick="backToTOC()">← Contents</button>
-        <span class="r-pg-num" id="rPgL" style="left:36px;padding-left:60px"></span>
+        <div class="page-bottom">
+          <button class="r-back-btn" onclick="backToTOC()">← Contents</button>
+        </div>
       </div>
+      <!-- Right page: text + comment button at bottom -->
       <div class="rpg right">
         <div class="r-text" id="rTextRight"></div>
-        <span class="r-pg-num" id="rPgR" style="right:36px;left:auto"></span>
-        <button class="r-comment-btn" onclick="document.getElementById('commentOverlay').classList.add('active')">Comment ♥</button>
+        <div class="page-bottom">
+          <button class="r-comment-btn" onclick="document.getElementById('commentOverlay').classList.add('active')">Comment ♥</button>
+        </div>
       </div>
     </div>
 
@@ -626,52 +667,129 @@ body {
           <div class="spine"></div>
           <div class="cover-border"></div>
 
-          <!-- Corners -->
-          <svg class="csq tl" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
-          <svg class="csq tr" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
-          <svg class="csq bl" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
-          <svg class="csq br" viewBox="0 0 62 62" fill="none"><path d="M4 4L4 58" stroke="#c9972a" stroke-width="1.5"/><path d="M4 4L58 4" stroke="#c9972a" stroke-width="1.5"/><circle cx="4" cy="4" r="3.2" fill="#c9972a"/><path d="M11 4 C11 22 26 32 42 31" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="45" cy="30" rx="7" ry="4" fill="#c9972a" transform="rotate(22 45 30)" opacity="0.85"/><path d="M4 11 C22 11 32 26 31 42" stroke="#c9972a" stroke-width="1" fill="none"/><ellipse cx="30" cy="45" rx="7" ry="4" fill="#c9972a" transform="rotate(68 30 45)" opacity="0.85"/></svg>
+          <!-- Corner ornaments — bright gold on green like Vicar of Wakefield -->
+          <svg class="csq tl" viewBox="0 0 65 65" fill="none">
+            <path d="M4 4L4 61" stroke="#c9972a" stroke-width="1.8"/>
+            <path d="M4 4L61 4" stroke="#c9972a" stroke-width="1.8"/>
+            <circle cx="4" cy="4" r="4" fill="#c9972a"/>
+            <circle cx="4" cy="4" r="2" fill="#f5d67a"/>
+            <path d="M13 4 C13 22 28 32 46 30" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="50" cy="29" rx="9" ry="5.5" fill="#c9972a" transform="rotate(22 50 29)"/>
+            <ellipse cx="50" cy="29" rx="5" ry="2.8" fill="#e8b84b" transform="rotate(22 50 29)"/>
+            <path d="M4 13 C22 13 32 28 30 46" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="29" cy="50" rx="9" ry="5.5" fill="#c9972a" transform="rotate(68 29 50)"/>
+            <ellipse cx="29" cy="50" rx="5" ry="2.8" fill="#e8b84b" transform="rotate(68 29 50)"/>
+            <!-- Small decorative fan at corner -->
+            <path d="M4 4 C14 8 18 14 16 22" stroke="#c9972a" stroke-width="0.8" fill="none" opacity="0.6"/>
+            <path d="M4 4 C8 14 14 18 22 16" stroke="#c9972a" stroke-width="0.8" fill="none" opacity="0.6"/>
+          </svg>
+          <svg class="csq tr" viewBox="0 0 65 65" fill="none">
+            <path d="M4 4L4 61" stroke="#c9972a" stroke-width="1.8"/>
+            <path d="M4 4L61 4" stroke="#c9972a" stroke-width="1.8"/>
+            <circle cx="4" cy="4" r="4" fill="#c9972a"/>
+            <circle cx="4" cy="4" r="2" fill="#f5d67a"/>
+            <path d="M13 4 C13 22 28 32 46 30" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="50" cy="29" rx="9" ry="5.5" fill="#c9972a" transform="rotate(22 50 29)"/>
+            <ellipse cx="50" cy="29" rx="5" ry="2.8" fill="#e8b84b" transform="rotate(22 50 29)"/>
+            <path d="M4 13 C22 13 32 28 30 46" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="29" cy="50" rx="9" ry="5.5" fill="#c9972a" transform="rotate(68 29 50)"/>
+            <ellipse cx="29" cy="50" rx="5" ry="2.8" fill="#e8b84b" transform="rotate(68 29 50)"/>
+            <path d="M4 4 C14 8 18 14 16 22" stroke="#c9972a" stroke-width="0.8" fill="none" opacity="0.6"/>
+            <path d="M4 4 C8 14 14 18 22 16" stroke="#c9972a" stroke-width="0.8" fill="none" opacity="0.6"/>
+          </svg>
+          <svg class="csq bl" viewBox="0 0 65 65" fill="none">
+            <path d="M4 4L4 61" stroke="#c9972a" stroke-width="1.8"/>
+            <path d="M4 4L61 4" stroke="#c9972a" stroke-width="1.8"/>
+            <circle cx="4" cy="4" r="4" fill="#c9972a"/>
+            <circle cx="4" cy="4" r="2" fill="#f5d67a"/>
+            <path d="M13 4 C13 22 28 32 46 30" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="50" cy="29" rx="9" ry="5.5" fill="#c9972a" transform="rotate(22 50 29)"/>
+            <path d="M4 13 C22 13 32 28 30 46" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="29" cy="50" rx="9" ry="5.5" fill="#c9972a" transform="rotate(68 29 50)"/>
+          </svg>
+          <svg class="csq br" viewBox="0 0 65 65" fill="none">
+            <path d="M4 4L4 61" stroke="#c9972a" stroke-width="1.8"/>
+            <path d="M4 4L61 4" stroke="#c9972a" stroke-width="1.8"/>
+            <circle cx="4" cy="4" r="4" fill="#c9972a"/>
+            <circle cx="4" cy="4" r="2" fill="#f5d67a"/>
+            <path d="M13 4 C13 22 28 32 46 30" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="50" cy="29" rx="9" ry="5.5" fill="#c9972a" transform="rotate(22 50 29)"/>
+            <path d="M4 13 C22 13 32 28 30 46" stroke="#c9972a" stroke-width="1.3" fill="none"/>
+            <ellipse cx="29" cy="50" rx="9" ry="5.5" fill="#c9972a" transform="rotate(68 29 50)"/>
+          </svg>
 
-          <!-- Botanical vines -->
-          <svg class="cover-bota" viewBox="0 0 800 530" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Left vine -->
-            <path d="M85 510 C85 510 65 395 92 278 C119 162 80 82 102 28" stroke="#7a3a10" stroke-width="2.2" fill="none" opacity="0.78"/>
-            <path d="M88 448 C88 448 50 424 28 393" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="22" cy="390" rx="18" ry="11" fill="#7a3a10" transform="rotate(-26 22 390)" opacity="0.72"/>
-            <ellipse cx="14" cy="382" rx="9" ry="5.5" fill="#7a3a10" transform="rotate(-16 14 382)" opacity="0.52"/>
-            <path d="M90 368 C90 368 132 346 152 316" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="156" cy="312" rx="17" ry="10" fill="#7a3a10" transform="rotate(20 156 312)" opacity="0.72"/>
-            <path d="M90 280 C90 280 50 258 30 228" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="25" cy="224" rx="17" ry="10" fill="#7a3a10" transform="rotate(-32 25 224)" opacity="0.72"/>
-            <path d="M92 198 C92 198 132 178 154 148" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="157" cy="144" rx="16" ry="10" fill="#7a3a10" transform="rotate(22 157 144)" opacity="0.72"/>
-            <path d="M94 120 C94 120 60 98 55 62" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="52" cy="58" rx="15" ry="9" fill="#7a3a10" transform="rotate(-12 52 58)" opacity="0.72"/>
-            <!-- Right vine -->
-            <path d="M715 500 C715 500 742 375 722 254 C702 133 748 58 730 20" stroke="#7a3a10" stroke-width="2.2" fill="none" opacity="0.78"/>
-            <path d="M718 438 C718 438 756 416 776 386" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="780" cy="383" rx="18" ry="11" fill="#7a3a10" transform="rotate(24 780 383)" opacity="0.72"/>
-            <path d="M720 352 C720 352 682 330 666 300" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="662" cy="296" rx="17" ry="10" fill="#7a3a10" transform="rotate(-20 662 296)" opacity="0.72"/>
-            <path d="M722 268 C722 268 760 248 778 218" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="781" cy="215" rx="16" ry="10" fill="#7a3a10" transform="rotate(28 781 215)" opacity="0.72"/>
-            <path d="M723 182 C723 182 684 160 668 128" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.68"/>
-            <ellipse cx="664" cy="124" rx="17" ry="10" fill="#7a3a10" transform="rotate(-24 664 124)" opacity="0.72"/>
+          <!-- Vicar of Wakefield-style botanical vines — bright gold on green -->
+          <svg class="cover-bota" viewBox="0 0 820 540" preserveAspectRatio="none">
+            <!-- Left main vine -->
+            <path d="M90 525 C90 525 68 400 95 285 C122 170 84 88 108 28" stroke="#b8860b" stroke-width="2.8" fill="none"/>
+            <path d="M90 525 C90 525 68 400 95 285 C122 170 84 88 108 28" stroke="rgba(201,151,42,0.35)" stroke-width="1.5" fill="none" transform="translate(1,1)"/>
+            <!-- Left branches -->
+            <path d="M92 455 C92 455 52 430 30 398" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="24" cy="394" rx="20" ry="12" fill="#c9972a" transform="rotate(-28 24 394)"/>
+            <ellipse cx="24" cy="394" rx="12" ry="7" fill="rgba(245,214,122,0.45)" transform="rotate(-28 24 394)"/>
+            <ellipse cx="15" cy="386" rx="10" ry="6" fill="rgba(201,151,42,0.72)" transform="rotate(-18 15 386)"/>
+
+            <path d="M93 375 C93 375 138 352 160 320" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="164" cy="316" rx="19" ry="11" fill="#c9972a" transform="rotate(20 164 316)"/>
+            <ellipse cx="164" cy="316" rx="11" ry="6" fill="rgba(245,214,122,0.45)" transform="rotate(20 164 316)"/>
+            <ellipse cx="173" cy="308" rx="9" ry="5.5" fill="rgba(201,151,42,0.68)" transform="rotate(30 173 308)"/>
+
+            <path d="M94 288 C94 288 52 264 32 232" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="27" cy="228" rx="19" ry="11" fill="#c9972a" transform="rotate(-33 27 228)"/>
+            <ellipse cx="27" cy="228" rx="11" ry="6" fill="rgba(245,214,122,0.45)" transform="rotate(-33 27 228)"/>
+
+            <path d="M95 202 C95 202 140 180 162 150" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="165" cy="146" rx="18" ry="10" fill="#c9972a" transform="rotate(22 165 146)"/>
+            <ellipse cx="165" cy="146" rx="10" ry="5.5" fill="rgba(245,214,122,0.45)" transform="rotate(22 165 146)"/>
+
+            <path d="M97 122 C97 122 62 100 57 62" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="54" cy="58" rx="16" ry="9" fill="#c9972a" transform="rotate(-12 54 58)"/>
+            <ellipse cx="54" cy="58" rx="9" ry="5" fill="rgba(245,214,122,0.45)" transform="rotate(-12 54 58)"/>
+
+            <!-- Right main vine -->
+            <path d="M730 515 C730 515 758 385 738 262 C718 140 762 62 744 22" stroke="#b8860b" stroke-width="2.8" fill="none"/>
+            <path d="M730 515 C730 515 758 385 738 262 C718 140 762 62 744 22" stroke="rgba(201,151,42,0.35)" stroke-width="1.5" fill="none" transform="translate(-1,1)"/>
+            <!-- Right branches -->
+            <path d="M732 448 C732 448 772 424 792 392" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="796" cy="388" rx="20" ry="12" fill="#c9972a" transform="rotate(25 796 388)"/>
+            <ellipse cx="796" cy="388" rx="12" ry="7" fill="rgba(245,214,122,0.45)" transform="rotate(25 796 388)"/>
+
+            <path d="M734 360 C734 360 692 336 675 304" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="671" cy="300" rx="19" ry="11" fill="#c9972a" transform="rotate(-22 671 300)"/>
+            <ellipse cx="671" cy="300" rx="11" ry="6" fill="rgba(245,214,122,0.45)" transform="rotate(-22 671 300)"/>
+
+            <path d="M736 275 C736 275 775 254 794 222" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="797" cy="218" rx="18" ry="10" fill="#c9972a" transform="rotate(28 797 218)"/>
+            <ellipse cx="797" cy="218" rx="10" ry="5.5" fill="rgba(245,214,122,0.45)" transform="rotate(28 797 218)"/>
+
+            <path d="M737 188 C737 188 695 165 680 132" stroke="#c9972a" stroke-width="1.8" fill="none"/>
+            <ellipse cx="676" cy="128" rx="19" ry="11" fill="#c9972a" transform="rotate(-25 676 128)"/>
+            <ellipse cx="676" cy="128" rx="11" ry="6" fill="rgba(245,214,122,0.45)" transform="rotate(-25 676 128)"/>
+
             <!-- Bottom scrollwork -->
-            <path d="M200 505 C235 482 268 490 288 468 C308 446 325 458 355 438 C385 418 415 475 448 488" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.52"/>
-            <path d="M448 488 C480 468 508 478 530 458 C552 438 565 452 600 490" stroke="#7a3a10" stroke-width="1.5" fill="none" opacity="0.52"/>
-            <!-- Centre spiral -->
-            <path d="M400 510 C400 510 368 488 378 466 C388 444 408 450 412 434 C416 418 398 410 394 396" stroke="#7a3a10" stroke-width="1.3" fill="none" opacity="0.42"/>
-            <!-- Gold star accents -->
-            <circle cx="162" cy="235" r="2.8" fill="#c9972a" opacity="0.78"/>
-            <circle cx="168" cy="224" r="1.4" fill="#c9972a" opacity="0.58"/>
-            <circle cx="154" cy="228" r="1.4" fill="#c9972a" opacity="0.58"/>
-            <circle cx="642" cy="165" r="2.8" fill="#c9972a" opacity="0.78"/>
-            <circle cx="648" cy="154" r="1.4" fill="#c9972a" opacity="0.58"/>
-            <circle cx="635" cy="158" r="1.4" fill="#c9972a" opacity="0.58"/>
-            <!-- Bottom leaves -->
-            <ellipse cx="245" cy="500" rx="10" ry="6" fill="#7a3a10" transform="rotate(-40 245 500)" opacity="0.62"/>
-            <ellipse cx="565" cy="494" rx="10" ry="6" fill="#7a3a10" transform="rotate(30 565 494)" opacity="0.62"/>
+            <path d="M205 518 C240 494 278 504 300 480 C322 456 340 470 372 448 C404 426 432 488 468 502" stroke="rgba(201,151,42,0.8)" stroke-width="1.8" fill="none"/>
+            <path d="M205 518 C240 494 278 504 300 480 C322 456 340 470 372 448 C404 426 432 488 468 502" stroke="rgba(201,151,42,0.3)" stroke-width="1" fill="none" transform="translate(0.5,0.5)"/>
+            <path d="M468 502 C504 480 535 492 558 468 C581 444 596 460 635 498" stroke="rgba(201,151,42,0.8)" stroke-width="1.8" fill="none"/>
+
+            <!-- Centre bottom spiral -->
+            <path d="M410 525 C410 525 376 500 386 476 C396 452 418 458 422 440 C426 422 406 414 402 398 C398 382 412 375 410 360" stroke="rgba(201,151,42,0.72)" stroke-width="1.4" fill="none"/>
+            <path d="M410 525 C410 525 376 500 386 476 C396 452 418 458 422 440 C426 422 406 414 402 398" stroke="rgba(201,151,42,0.28)" stroke-width="0.8" fill="none" transform="translate(0.5,0.5)"/>
+
+            <!-- Embossed star accents -->
+            <circle cx="170" cy="238" r="3.5" fill="#c9972a"/>
+            <circle cx="170" cy="238" r="2" fill="#f5d67a"/>
+            <circle cx="177" cy="226" r="1.5" fill="rgba(201,151,42,0.85)"/>
+            <circle cx="161" cy="230" r="1.5" fill="rgba(201,151,42,0.85)"/>
+
+            <circle cx="654" cy="170" r="3.5" fill="#c9972a"/>
+            <circle cx="654" cy="170" r="2" fill="#f5d67a"/>
+            <circle cx="661" cy="158" r="1.5" fill="rgba(201,151,42,0.85)"/>
+            <circle cx="645" cy="162" r="1.5" fill="rgba(201,151,42,0.85)"/>
+
+            <!-- Bottom leaf clusters -->
+            <ellipse cx="250" cy="514" rx="12" ry="7" fill="rgba(201,151,42,0.8)" transform="rotate(-38 250 514)"/>
+            <ellipse cx="580" cy="508" rx="12" ry="7" fill="rgba(201,151,42,0.8)" transform="rotate(32 580 508)"/>
+            <ellipse cx="415" cy="360" rx="8" ry="5" fill="rgba(201,151,42,0.68)" transform="rotate(10 415 360)"/>
           </svg>
 
           <!-- Title -->
@@ -702,23 +820,23 @@ body {
     <div class="c-ty" id="cTy">
       <div class="c-seal">🕯️</div>
       <div class="c-title">Thank you, dear reader</div>
-      <p style="font-family:'Lora',serif;font-style:italic;color:rgba(0,0,0,0.48);margin-top:10px;font-size:0.84rem;">Your words have been received with gratitude.</p>
+      <p style="font-family:'Lora',serif;font-style:italic;color:rgba(0,0,0,0.46);margin-top:10px;font-size:0.84rem;">Your words have been received with gratitude.</p>
     </div>
   </div>
 </div>
 
-<!-- Writer Panel (secret) -->
+<!-- Writer Panel (secret — type "charmi") -->
 <div class="writer-panel" id="writerPanel">
   <div class="w-modal">
     <div class="w-head">
-      <span class="w-title">Writer's Studio <span class="w-secret-badge">🔒 AUTHOR ONLY</span></span>
+      <span class="w-title">Writer's Studio <span class="w-badge">🔒 AUTHOR ONLY</span></span>
       <button class="w-close" onclick="closeWriter()">✕</button>
     </div>
     <div class="w-body">
       <div class="w-tabs">
-        <button class="w-tab active" id="tab-btn-write" onclick="switchTab('write', this)">✒ Write</button>
-        <button class="w-tab" id="tab-btn-chapters" onclick="switchTab('chapters', this)">📖 My Chapters</button>
-        <button class="w-tab" id="tab-btn-comments" onclick="switchTab('comments', this)">💬 Comments</button>
+        <button class="w-tab active" id="tab-btn-write"    onclick="switchTab('write',this)">✒ Write</button>
+        <button class="w-tab"        id="tab-btn-chapters" onclick="switchTab('chapters',this)">📖 Chapters</button>
+        <button class="w-tab"        id="tab-btn-comments" onclick="switchTab('comments',this)">💬 Comments</button>
       </div>
 
       <!-- Write -->
@@ -732,12 +850,8 @@ body {
           <button class="w-tool" onclick="wBreak()">¶ New Para</button>
           <button class="w-tool" onclick="wIns('✦')">✦ Divider</button>
         </div>
-        <textarea class="w-ta" id="wContent" placeholder="Begin writing your entry here...
-
-Separate paragraphs with a blank line.
-
-Your opening paragraph gets a decorative drop cap automatically."></textarea>
-        <p class="w-hint">Tip — separate paragraphs with a blank line. The first gets a decorative drop cap.</p>
+        <textarea class="w-ta" id="wContent" placeholder="Begin writing here...&#10;&#10;Separate paragraphs with a blank line.&#10;Your opening paragraph gets a decorative drop cap."></textarea>
+        <p class="w-hint">Tip — blank line between paragraphs. First paragraph gets a drop cap automatically.</p>
         <label class="w-lbl">Chapter Number (leave blank for next)</label>
         <input class="w-in" type="number" id="wNum" placeholder="e.g. 1, 2, 3..."/>
         <button class="w-publish" onclick="publishChapter()">PUBLISH TO DIARY</button>
@@ -747,90 +861,97 @@ Your opening paragraph gets a decorative drop cap automatically."></textarea>
       <div class="w-panel" id="tab-chapters">
         <div class="w-cards" id="wCards"></div>
       </div>
+
       <!-- Comments -->
       <div class="w-panel" id="tab-comments">
-        <div class="w-cards" id="wComments"></div>
+        <div id="wComments"></div>
       </div>
-
     </div>
   </div>
 </div>
-<div class="secret-flash" id="secretFlash">✦ WRITER'S STUDIO UNLOCKED</div>
 
-<!-- Toast -->
+<div class="secret-flash" id="secretFlash">✦ WRITER'S STUDIO UNLOCKED</div>
 <div class="toast" id="toast"></div>
 
 <script>
 // ── PARTICLES ──
 const pEl = document.getElementById('particles');
-const pCols = ['rgba(57,255,20,0.75)','rgba(0,255,136,0.65)','rgba(201,151,42,0.85)','rgba(57,255,20,0.4)','rgba(0,200,80,0.5)'];
+const pCols = ['rgba(201,151,42,0.85)','rgba(57,180,80,0.6)','rgba(245,214,122,0.65)','rgba(30,150,70,0.5)','rgba(232,184,75,0.7)'];
 for (let i = 0; i < 35; i++) {
   const p = document.createElement('div');
   p.className = 'particle';
-  const s = 1 + Math.random() * 2.8;
-  p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${pCols[Math.floor(Math.random()*pCols.length)]};animation-duration:${9+Math.random()*18}s;animation-delay:${Math.random()*14}s;box-shadow:0 0 ${s*4}px currentColor;`;
+  const s = 1 + Math.random() * 2.5;
+  p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${pCols[~~(Math.random()*pCols.length)]};animation-duration:${10+Math.random()*18}s;animation-delay:${Math.random()*14}s;box-shadow:0 0 ${s*4}px currentColor;`;
   pEl.appendChild(p);
 }
 
 // ── DATA ──
 const ROMANS = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV'];
 let chapters = [
-  { id:1, title:"The Morning I Forgot My Name", content:`There are mornings when you wake up and the ceiling feels like a stranger. You blink once, twice, and for a fleeting second — you don't know who you are. Not in a frightening way. In the quietest, most honest way imaginable.
+  { id:1, num:0, title:"The Morning I Forgot My Name",
+    content:`There are mornings when you wake up and the ceiling feels like a stranger. You blink once, twice, and for a fleeting second you don't know who you are. Not in a frightening way. In the quietest, most honest way imaginable.
 
-I had one of those mornings last Tuesday. The light was coming in through the curtains the way it only does in autumn, gold and thin and hesitant. The birds were trying very hard to be poetic about it.
+I had one of those mornings last Tuesday. The light was coming in through the curtains the way it only does in autumn — gold and thin and hesitant. The birds were trying very hard to be poetic about it.
 
 I lay there, perfectly still, waiting for myself to return. And in that pause — that three-second gap between sleep and person — I think I understood something important.
 
 We are not always who we were yesterday. And that is not a tragedy. That is, in fact, the whole point.
 
-The name comes back. The to-do list comes back. The anxiety about that email you forgot to send comes back. But for three whole seconds, you were no one. And no one felt like freedom.`, num:0 },
-  { id:2, title:"Letters Never Sent", content:`I have a folder on my phone called "drafts" that has 47 unsent messages. To my mother, mostly. To a friend who moved away three years ago. To a version of myself from 2019 who desperately needed someone to tell her she was going to be okay.
+The name comes back. The to-do list comes back. The anxiety about that email you forgot to send comes back. But for three whole seconds, you were no one. And no one felt like freedom.`
+  },
+  { id:2, num:1, title:"Letters Never Sent",
+    content:`I have a folder on my phone called "drafts" that has 47 unsent messages. To my mother, mostly. To a friend who moved away three years ago. To a version of myself from 2019 who desperately needed someone to tell her she was going to be okay.
 
 I think writing letters you never send is one of the most honest things a person can do. There is no performance in it. No editing yourself for someone else's comfort. Just the raw, unpolished truth of what you actually meant to say.
 
-The letter to my mother starts: I'm not angry anymore. I just miss who we were before we both became so careful around each other. I've rewritten it fourteen times. It gets more honest each time. I'll probably never send it.
+The letter to my mother starts: I'm not angry anymore. I just miss who we were before we both became so careful around each other. I've rewritten it fourteen times. It gets more honest each time. I'll probably never send it. That's okay.
 
-There's something sacred about words that exist only for you. They don't need to arrive anywhere. They just need to be true.`, num:1 }
+There's something sacred about words that exist only for you. They don't need to arrive anywhere. They just need to be true.`
+  }
 ];
 let nextId = 3;
-let commentTimer = null;
-let comments = []; // { id, name, text, chapterId, chapterTitle, date }
+let comments = [];
 let nextCommentId = 1;
 let currentChapterId = null;
 
-// ── BOOK OPEN ──
+// ── OPEN BOOK ──
 window.onload = () => { buildTOC(); setTimeout(openBook, 1700); };
 
 function openBook() {
   const cover = document.getElementById('coverWrap');
   cover.classList.add('open');
   setTimeout(() => {
-    cover.style.display = 'none';
+    // Don't hide — just make invisible so layout stays stable
+    cover.style.visibility = 'hidden';
+    cover.style.pointerEvents = 'none';
     const toc = document.getElementById('tocSpread');
     toc.classList.add('active');
-    toc.style.opacity = '0'; toc.style.transition = 'opacity 0.45s';
-    setTimeout(() => { toc.style.opacity = '1'; revealTOC(); }, 60);
-  }, 1850);
+    toc.style.opacity = '0'; toc.style.transition = 'opacity 0.5s';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toc.style.opacity = '1';
+      revealTOC();
+    }));
+  }, 1950);
 }
 
 function revealTOC() {
   setTimeout(() => {
     document.querySelectorAll('.toc-row').forEach((el, i) => {
-      setTimeout(() => el.classList.add('show'), i * 120);
+      setTimeout(() => el.classList.add('show'), i * 110);
     });
-  }, 150);
+  }, 200);
 }
 
-// ── BUILD TOC ──
+// ── TOC ──
 function buildTOC() {
   const list = document.getElementById('tocList');
   if (!chapters.length) {
-    list.innerHTML = '<p style="font-family:Lora,serif;font-style:italic;color:rgba(0,0,0,0.32);text-align:center;padding:28px 0;font-size:0.84rem;">No chapters yet.</p>';
+    list.innerHTML = '<p style="font-family:Lora,serif;font-style:italic;color:rgba(0,0,0,0.3);text-align:center;padding:30px 0;font-size:0.85rem;">No chapters yet.</p>';
     return;
   }
   list.innerHTML = chapters.map(ch => `
     <div class="toc-row" onclick="openChapter(${ch.id})">
-      <span class="toc-rnum">${ROMANS[ch.num] || ch.num+1}.</span>
+      <span class="toc-rnum">${ROMANS[ch.num]||ch.num+1}.</span>
       <span class="toc-rname">${ch.title}</span>
       <span class="toc-rdots"></span>
       <span class="toc-rpg">${ch.num*8+3}</span>
@@ -842,48 +963,47 @@ function openChapter(id) {
   currentChapterId = id;
   const ch = chapters.find(c => c.id === id);
   if (!ch) return;
-  const paras = ch.content.split(/\n\n+/).filter(p => p.trim());
-  const half = Math.ceil(paras.length / 2);
-  const leftParas = paras.slice(0, half);
-  const rightParas = paras.slice(half);
 
-  const makeHTML = (arr, startDrop) => arr.map((p, i) => {
-    const cls = (i === 0 && startDrop) ? 'drop-cap' : '';
-    return `<p class="${cls}" style="animation-delay:${i*0.11}s">${p.trim().replace(/\n/g,'<br>')}</p>`;
+  const paras = ch.content.split(/\n\n+/).filter(p => p.trim());
+  const half  = Math.ceil(paras.length / 2);
+
+  const makeHTML = (arr, dropCap) => arr.map((p, i) => {
+    const cls = (i === 0 && dropCap) ? 'drop-cap' : '';
+    return `<p class="${cls}" style="animation-delay:${i*0.1}s">${p.trim().replace(/\n/g,'<br>')}</p>`;
   }).join('');
 
-  document.getElementById('rTitle').textContent = ch.title;
-  document.getElementById('rTextLeft').innerHTML = makeHTML(leftParas, true);
-  document.getElementById('rTextRight').innerHTML = makeHTML(rightParas, false);
-  document.getElementById('rPgL').textContent = `Page ${ch.num*8+3}`;
-  document.getElementById('rPgR').textContent = `Page ${ch.num*8+4}`;
+  document.getElementById('rTitle').textContent       = ch.title;
+  document.getElementById('rTextLeft').innerHTML      = makeHTML(paras.slice(0, half), true);
+  document.getElementById('rTextRight').innerHTML     = makeHTML(paras.slice(half), false);
 
+  // Smooth transition
   const toc = document.getElementById('tocSpread');
+  toc.style.transition = 'opacity 0.35s';
   toc.style.opacity = '0';
   setTimeout(() => {
     toc.classList.remove('active');
     const rs = document.getElementById('readSpread');
     rs.classList.add('active');
     rs.style.opacity = '0'; rs.style.transition = 'opacity 0.4s';
-    setTimeout(() => rs.style.opacity = '1', 50);
-  }, 320);
-
-  clearTimeout(commentTimer);
+    requestAnimationFrame(() => requestAnimationFrame(() => rs.style.opacity = '1'));
+  }, 360);
 }
 
 // ── BACK TO TOC ──
 function backToTOC() {
-  clearTimeout(commentTimer);
   const rs = document.getElementById('readSpread');
-  rs.style.opacity = '0';
+  rs.style.transition = 'opacity 0.35s'; rs.style.opacity = '0';
   setTimeout(() => {
     rs.classList.remove('active');
     buildTOC();
     const toc = document.getElementById('tocSpread');
     toc.classList.add('active');
     toc.style.opacity = '0'; toc.style.transition = 'opacity 0.4s';
-    setTimeout(() => { toc.style.opacity = '1'; revealTOC(); }, 50);
-  }, 340);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toc.style.opacity = '1';
+      revealTOC();
+    }));
+  }, 360);
 }
 
 // ── COMMENT ──
@@ -891,15 +1011,12 @@ function submitComment() {
   const name = document.getElementById('cName').value.trim() || 'Anonymous';
   const text = document.getElementById('cText').value.trim();
   if (!text) return;
-  // Save the comment
   const ch = chapters.find(c => c.id === currentChapterId);
   comments.push({
-    id: nextCommentId++,
-    name,
-    text,
+    id: nextCommentId++, name, text,
     chapterId: currentChapterId,
-    chapterTitle: ch ? ch.title : 'Unknown Chapter',
-    date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })
+    chapterTitle: ch ? ch.title : 'General',
+    date: new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})
   });
   spawnConfetti();
   document.getElementById('cForm').style.display = 'none';
@@ -915,10 +1032,10 @@ function submitComment() {
 }
 
 function spawnConfetti() {
-  const cols = ['#c9972a','#e8b84b','#39ff14','#2d5a27','#f5d67a','#00ff88'];
-  for (let i = 0; i < 32; i++) {
+  const cols = ['#c9972a','#e8b84b','#f5d67a','#8b6010','#d4a017'];
+  for (let i = 0; i < 30; i++) {
     const c = document.createElement('div');
-    c.style.cssText = `position:fixed;left:${15+Math.random()*70}%;top:18%;width:${6+Math.random()*9}px;height:${6+Math.random()*9}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation:confFall ${1.2+Math.random()*.9}s ease-in forwards;animation-delay:${Math.random()*.4}s;pointer-events:none;z-index:500;`;
+    c.style.cssText = `position:fixed;left:${15+Math.random()*70}%;top:20%;width:${6+Math.random()*9}px;height:${6+Math.random()*9}px;background:${cols[~~(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation:confFall ${1.2+Math.random()*.9}s ease-in forwards;animation-delay:${Math.random()*.4}s;pointer-events:none;z-index:500;`;
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 2500);
   }
@@ -926,48 +1043,37 @@ function spawnConfetti() {
 
 function returnToCover() {
   const toc = document.getElementById('tocSpread');
-  const rs = document.getElementById('readSpread');
+  const rs  = document.getElementById('readSpread');
   toc.style.opacity = '0'; rs.style.opacity = '0';
   setTimeout(() => {
     toc.classList.remove('active'); rs.classList.remove('active');
     const cover = document.getElementById('coverWrap');
-    cover.style.display = ''; cover.classList.remove('open');
+    cover.style.visibility = ''; cover.style.pointerEvents = '';
+    cover.classList.remove('open');
     cover.style.transition = 'none'; void cover.offsetWidth; cover.style.transition = '';
     setTimeout(openBook, 2400);
   }, 400);
 }
 
-// ── SECRET KEYBOARD SHORTCUT ──
-// Type "charmi" anywhere (no input focused) to open Writer's Studio
+// ── SECRET SHORTCUT ──
 let keyBuffer = '';
-const SECRET = 'charmi';
 document.addEventListener('keydown', e => {
-  // Don't trigger if user is typing in an input/textarea
   const tag = document.activeElement.tagName;
   if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-
   keyBuffer += e.key.toLowerCase();
-  if (keyBuffer.length > SECRET.length) keyBuffer = keyBuffer.slice(-SECRET.length);
-  if (keyBuffer === SECRET) {
-    keyBuffer = '';
-    openWriter();
-  }
+  if (keyBuffer.length > 6) keyBuffer = keyBuffer.slice(-6);
+  if (keyBuffer === 'charmi') { keyBuffer = ''; openWriter(); }
 });
 
 // ── WRITER ──
 function openWriter() {
-  buildChapterCards();
-  buildComments();
+  buildChapterCards(); buildComments();
   document.getElementById('writerPanel').classList.add('active');
-  // Flash secret badge
   const flash = document.getElementById('secretFlash');
   flash.classList.add('show');
   setTimeout(() => flash.classList.remove('show'), 2200);
 }
-function closeWriter() {
-  document.getElementById('writerPanel').classList.remove('active');
-}
-// Close on backdrop click
+function closeWriter() { document.getElementById('writerPanel').classList.remove('active'); }
 document.getElementById('writerPanel').addEventListener('click', e => {
   if (e.target === document.getElementById('writerPanel')) closeWriter();
 });
@@ -982,10 +1088,10 @@ function switchTab(name, btn) {
 }
 
 function publishChapter() {
-  const title = document.getElementById('wTitle').value.trim();
+  const title   = document.getElementById('wTitle').value.trim();
   const content = document.getElementById('wContent').value.trim();
   if (!title || !content) { showToast('Add a title and content first ✦'); return; }
-  const nv = document.getElementById('wNum').value;
+  const nv  = document.getElementById('wNum').value;
   const num = nv ? Math.max(0, parseInt(nv)-1) : chapters.length;
   chapters.push({ id: nextId++, title, content, num });
   chapters.sort((a,b) => a.num - b.num);
@@ -994,35 +1100,6 @@ function publishChapter() {
   document.getElementById('wNum').value = '';
   buildTOC(); buildChapterCards();
   showToast('Published to Diary ✦');
-}
-
-function buildComments() {
-  const el = document.getElementById('wComments');
-  if (!comments.length) {
-    el.innerHTML = '<p class="w-empty">No comments yet. They\'ll appear here once readers leave their thoughts.</p>';
-    return;
-  }
-  el.innerHTML = comments.slice().reverse().map(c => `
-    <div class="w-comment-card" id="comment-${c.id}">
-      <div class="w-comment-meta">
-        <span class="w-comment-author">✦ ${c.name}</span>
-        <span class="w-comment-chapter">${c.chapterTitle} · ${c.date}</span>
-      </div>
-      <div class="w-comment-text">"${c.text}"</div>
-      <div class="w-comment-footer">
-        <button class="w-act dl" onclick="deleteComment(${c.id})">Delete</button>
-      </div>
-    </div>`).join('');
-}
-
-function deleteComment(id) {
-  const card = document.getElementById('comment-'+id);
-  if (card) { card.style.opacity = '0'; card.style.transition = 'opacity 0.3s'; }
-  setTimeout(() => {
-    comments = comments.filter(c => c.id !== id);
-    buildComments();
-  }, 320);
-  showToast('Comment removed ✦');
 }
 
 function buildChapterCards() {
@@ -1045,9 +1122,9 @@ function editChapter(id) {
   const ch = chapters.find(c => c.id === id);
   if (!ch) return;
   chapters = chapters.filter(c => c.id !== id);
-  document.getElementById('wTitle').value = ch.title;
+  document.getElementById('wTitle').value   = ch.title;
   document.getElementById('wContent').value = ch.content;
-  document.getElementById('wNum').value = ch.num + 1;
+  document.getElementById('wNum').value     = ch.num + 1;
   document.querySelectorAll('.w-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.w-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-btn-write').classList.add('active');
@@ -1061,23 +1138,46 @@ function deleteChapter(id) {
   showToast('Chapter removed ✦');
 }
 
-// Text tools
+function buildComments() {
+  const el = document.getElementById('wComments');
+  if (!comments.length) {
+    el.innerHTML = '<p class="w-empty">No comments yet. They\'ll appear here once readers leave their thoughts.</p>';
+    return;
+  }
+  el.innerHTML = comments.slice().reverse().map(c => `
+    <div class="w-comment-card" id="cmnt-${c.id}">
+      <div class="w-comment-meta">
+        <span class="w-comment-author">✦ ${c.name}</span>
+        <span class="w-comment-chapter">${c.chapterTitle} · ${c.date}</span>
+      </div>
+      <div class="w-comment-text">"${c.text}"</div>
+      <div class="w-comment-footer">
+        <button class="w-act dl" onclick="deleteComment(${c.id})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+function deleteComment(id) {
+  const card = document.getElementById('cmnt-'+id);
+  if (card) { card.style.opacity = '0'; card.style.transition = 'opacity 0.3s'; }
+  setTimeout(() => { comments = comments.filter(c => c.id !== id); buildComments(); }, 320);
+  showToast('Comment removed ✦');
+}
+
+// ── TEXT TOOLS ──
 function wWrap(a,b) {
   const ta = document.getElementById('wContent');
   const s = ta.selectionStart, e = ta.selectionEnd;
-  const sel = ta.value.substring(s,e)||'text';
-  ta.value = ta.value.substring(0,s)+a+sel+b+ta.value.substring(e);
+  ta.value = ta.value.substring(0,s)+a+(ta.value.substring(s,e)||'text')+b+ta.value.substring(e);
   ta.focus();
 }
 function wBreak() {
-  const ta = document.getElementById('wContent');
-  const s = ta.selectionStart;
+  const ta = document.getElementById('wContent'), s = ta.selectionStart;
   ta.value = ta.value.substring(0,s)+'\n\n'+ta.value.substring(s);
   ta.selectionStart = ta.selectionEnd = s+2; ta.focus();
 }
 function wIns(str) {
-  const ta = document.getElementById('wContent');
-  const s = ta.selectionStart;
+  const ta = document.getElementById('wContent'), s = ta.selectionStart;
   ta.value = ta.value.substring(0,s)+str+ta.value.substring(s);
   ta.selectionStart = ta.selectionEnd = s+str.length; ta.focus();
 }
